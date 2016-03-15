@@ -4,6 +4,7 @@ Reactive software development of JVM
 Good starting points:
 - http://www.reactivemanifesto.org/ (reactive manifesto)
 - http://reactivex.io/ (Collection of open source projects & documentation, including Netflix JavaRx)
+- https://www.coursera.org/course/reactive (Coursera Scala+Rx course)
 
 Definitions:
 - Functional Reactive Programming (in Scala) - FRP  /TODO: define/
