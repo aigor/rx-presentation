@@ -26,6 +26,8 @@ Key concepts to dive in:
 - Railway Oriented Programming (does it apply to Reactive pattern?)
 
 Videos:
+- (!! Learn you some Rx for the greater good) https://www.youtube.com/watch?v=BujWQSjtplc
+- (! Devnexus 2015 - RxJava and Retrolambda Making Android - Ross Hambrick) https://www.youtube.com/watch?v=vRl3u1I9v2M
 - (Li Haoyi: Fun Functional-Reactive Programming with Scala.Rx) https://www.youtube.com/watch?v=i9mPUU1gu_8
 - (Ben Christensen: Functional Reactive Programming with RxJava, Netflix) https://www.youtube.com/watch?v=_t06LRX0DV0 (watched)
 - (Erik Meijer: A Playful Introduction to Rx) https://www.youtube.com/watch?v=WKore-AkisY (watched)
