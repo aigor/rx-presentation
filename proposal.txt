@@ -10,7 +10,9 @@ Your professional level: Senior
 Your company: GlobalLogic
 Your current job position: Senion Java Developer
 Describe your experience with Java: 
+  Has 7 years of experience with Java platform, used languages: Java, Groovy, Scala, worked with such technologies and framework: OSGi, SpringFramework, J2EE. Recently was involved into design and implementation of web-based solution for video annotation on Avid Platform.
 Describe your public speaking and writing experience:
+  Gave few talks at the university.
 
 Full name: Igor Lozynskyi
 City: Kyiv
