@@ -16,7 +16,7 @@ Full name: Igor Lozynskyi
 City: Kyiv
 Information about you for speaker profile:
  Software engineer primarily focused on the development of reliable, scalable, and blazingly fast systems. 
- Has over 7 years of experience with Java patform.
+ Has over 7 years of experience with Java platform.
  Passionate about interesting and dynamic projects both in life and in software development.
  
 Email: aigooor@...
