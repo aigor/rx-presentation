@@ -1,7 +1,7 @@
 Talk name: [Lightning talk] RxJava Applied: Consise Examples where It Shines
 
 Abstract:
-  FRP & RxJava has already gained an important place in software development of all kinds, from mobile applications to high load servers. But it is just a beginning. The approach proposed by RxJava gives us such benefits as functional composition over observable streams, easy asynchronous programming, including error handling, an amazing toolbox of functions to build workflows.
+  FRP & RxJava have already gained an important place in software development of all kinds, from mobile applications to high load servers. But it is just a beginning. The approach proposed by RxJava gives us such benefits as functional composition over observable streams, easy asynchronous programming, including error handling, an amazing toolbox of functions to build workflows.
   This presentation is all about short but expressive examples where RxJava gives more possibilities requiring less code.  
  
 Do you have any other ideas for talks? Add names and abstracts here so our program committee could review them:
