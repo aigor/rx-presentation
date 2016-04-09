@@ -34,3 +34,5 @@ Videos:
 - (Chris Richardson: Futures and Rx Observables: powerful abstractions for consuming web services asynchronously) https://www.youtube.com/watch?v=aZkwIA4k2xU
 - (Reactive Design Patterns) https://www.youtube.com/watch?v=nSfXcSWq0ug
 
+Articles:
+- Schedulers (RU) (https://habrahabr.ru/company/rambler-co/blog/280388/)
