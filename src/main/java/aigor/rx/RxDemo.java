@@ -16,7 +16,7 @@ public class RxDemo {
 
     public static void main(String[] args) throws InterruptedException {
         final long startTime = System.currentTimeMillis();
-        final int tasks = 50;
+        final int tasks = 100;
         CountDownLatch latch = new CountDownLatch(tasks);
         for (int i=0; i < tasks; i++) {
             requestExecutor.execute(() -> {
@@ -65,14 +65,18 @@ public class RxDemo {
         System.out.println(String.format("[%4s ms] [T:%3s] %s", (System.currentTimeMillis() - startTime), Thread.currentThread().getId(), message));
     }
 
+    private static void sleep(long millis){
+        try {
+            Thread.sleep(millis);
+        } catch (Exception e) {}
+    }
+
     private static <T> Observable<T> mockClient(T... ts) {
         return Observable.create((Subscriber<? super T> s) -> {
             // simulate latency
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-            }
+            sleep(700);
             for (T t : ts) {
+                sleep(100);
                 s.onNext(t);
             }
             s.onCompleted();
