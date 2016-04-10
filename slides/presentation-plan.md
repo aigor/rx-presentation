@@ -1,5 +1,4 @@
 # RxJava Applied: Consise Examples where It Shines
-Presenation info
 - Language: Ukrainian
 - My aim: Show how good RxJava & FRP are for software integration
 - Attention attraction: Solve complex integration scenario in 20 lines of code!
