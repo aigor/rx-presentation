@@ -68,10 +68,10 @@
 ## TODO for presentation
 - Find good preentation template (including pretty font)
 - Find callback based library options for Java (I saw some for Android)
-- Look into JDeffer
+- Look into JDeferred
 - Look at Apache Camel current status
 - Review RxJava strangs & pitfalls with community (it shouldn't by only my opinion)
-- Try to solve problem using other approaches and libraries (at least Camel, Akka, GPars, Scala, JDeffer, CompletableFuture)
+- Try to solve problem using other approaches and libraries (at least Camel, Akka, GPars, Scala, JDeferred, CompletableFuture)
 - Add some performance testing suite for rough comparison
 - Investigate in details ability to integrate with Java NIO, Netty, asynch servlets (possible Q&A)
 - Add list of most likely questions (and answers for them)
