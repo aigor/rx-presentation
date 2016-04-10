@@ -5,14 +5,14 @@
 - What I want: I want listeners to add FRP & RxJava lo list of their every-day instruments 
 
 ## Presentation plan
-1. *Introduction (2 min)*
+**1. Introduction (2 min)**
 	* Presentation name and info about speaker: seaker (name, company, background) & talk topic (20 sec)
 	* Notice: We are tight on time so all Q&A would be at the end of presentation, please do not interrupt without serious reason (20 sec)
 	* It is important for software: Integration, Workflows (synch & asynch)
 	* Options to deal with complexity of integration (slide with alternative's logos)
 	* One more option: RxJava - our applicant for today (10 sec)
 	* RxJava history chart (Aim: it is already mature library, 30 sec)
-2. *Main part: Problem solving (10 min)*
+**2. Main part: Problem solving (10 min)**
 	* Warm-up problem: resolve user status, photo, and last 5 tweets in parallel (3 min)
 		- Problem requirements (30 sec)
 		- Possible solution strategy on diagram (30 sec)
@@ -27,7 +27,7 @@
 		- Description of parts of code (2-4 slides with line by line explenations) (2 min)
 		- Marble diagram for stream of data (if it isn't very complicated, candidate to be ommited) (15 sec)
 		- Benefits: Threading options, retry strategies, backpreasure from the box, ease of event generation (30 sec)
-3. *Conclusion: it is better to finish with benefits (2 min)*
+**3. Conclusion: it is better to finish with benefits (2 min)**
 	* RxJava pitfalls (1 slide, TOOD: Review this):
 		- A lot of small building blocks (observable transformations), it requires some learning
 		- Requires to understand threadpools and undelining magic, take care about back pressure (it is not silver bullet)
@@ -40,7 +40,7 @@
 		- Easy to integrate into current solutions
 		- Has great success in Android development
 		- Good documentation
-4. *Q&A* (TODO: would it be time for Q&A on lightning talk?) (1 min)
+**4. Q&A (TODO: would it be time for Q&A on lightning talk?) (1 min)**
 	* TODO: Add list of most likely questions
 
 ## Presntation notices
