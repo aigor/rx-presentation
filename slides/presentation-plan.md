@@ -4,7 +4,7 @@
 - Attention attraction: Solve complex integration scenario in 20 lines of code!
 - What I want: I want listeners to add FRP & RxJava lo list of their every-day instruments 
 
-## Presentation plan:
+## Presentation plan
 1. Introduction (2 min)
 	* Presentation name and info about speaker: seaker (name, company, background) & talk topic (20 sec)
 	* Notice: We are tight on time so all Q&A would be at the end of presentation, please do not interrupt without serious reason (20 sec)
@@ -43,7 +43,7 @@
 4. Q&A (TODO: would it be time for Q&A on lightning talk?) (1 min)
 	* TODO: Add list of most likely questions
 
-## Presntation notices:
+## Presntation notices
 - We are tight on time so all Q&A would be at the end of presentation, please do not interrupt without serious reason
 - Ommit all non vital details, be concise
 - I can only name alternatives for RxJava:
@@ -61,11 +61,11 @@
 - All used code should be accessible on GitHub repo
 - Main part slides should contain link to GitHub repo
 
-## Possible questins:
+## Possible questins
 - Performance comparison - very rough, it is not JMH (TODO: Add solutions and test suite for comparison)
 - Ability to integrate with Java NIO, Netty, asynch servlets (TODO: Add code samples)
 
-## TODO for presentation:
+## TODO for presentation
 - Find good preentation template (including pretty font)
 - Find callback based library options for Java (I saw some for Android)
 - Look into JDeffer
