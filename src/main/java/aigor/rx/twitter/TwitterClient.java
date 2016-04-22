@@ -22,8 +22,8 @@ public class TwitterClient {
     static String API_BASE_URL = "https://api.twitter.com/1.1/";
     static String OAUTH_API_BASE_URL = "https://api.twitter.com/oauth2/";
 
-    private final String key;  //= "ecZrPMbkGwbznWZ9KvOqHjcq2";
-    private final String secret; //= "6hF9PhCPN7gu3kp2aqFSDSIGEGTt1qFeBtTkTCBcVRc8MA6QXr";
+    private final String key;
+    private final String secret;
 
     private volatile Optional<String> authToken = Optional.empty();
 
