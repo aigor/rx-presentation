@@ -41,18 +41,39 @@ public class TwitterClientTest {
     @Test
     public void getUserInfoUserRx() throws Exception {
         long start = currentTimeMillis();
-        Iterator<Integer> friendsCount = Observable.from(users)
+        List<TwitterUser> friendsCount = Observable.from(users)
                 .subscribeOn(Schedulers.io())
-                .flatMap(user -> Observable.just(client.getUserInfo(user).getInt("friends_count")))
-                .take(users.size())
+                .flatMap(user ->
+                        Observable.zip(
+                                Observable.just(user),
+                                Observable.fromCallable(() -> client.getUserInfo(user).getInt("friends_count")).subscribeOn(Schedulers.io()),
+                                TwitterUser::new
+                        )
+                )
+                .toList()
                 .toBlocking()
-                .getIterator();
+                .single();
 
-        List<Integer> list = new ArrayList<>();
-        friendsCount.forEachRemaining(list::add);
+        log.info("Friends count: " + friendsCount + ", took " + (currentTimeMillis() - start) + "ms.");
 
-        log.info("Friends count: " + list + ", took " + (currentTimeMillis() - start) + "ms.");
+    }
 
+    static class TwitterUser {
+        public String name;
+        public Integer friends;
+
+        public TwitterUser(String name, Integer friends) {
+            this.name = name;
+            this.friends = friends;
+        }
+
+        @Override
+        public String toString() {
+            return "TwitterUser{" +
+                    "name='" + name + '\'' +
+                    ", friends=" + friends +
+                    '}';
+        }
     }
 
 
