@@ -5,7 +5,9 @@ import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -30,12 +32,12 @@ public class TwitterClientTest {
     @Test
     public void getUserInfoUserStreams() throws Exception {
         long start = currentTimeMillis();
-        Map<String, Integer> friendsCount = users.stream()
+        List<TwitterUser> friendsCount = users.stream()
                 .parallel()
-                .collect(Collectors.toMap(  user -> user,
-                                            user -> client.getUserInfo(user).getInt("friends_count"))
-        );
-        log.info("Friends count: " + friendsCount + ", took " + (currentTimeMillis() - start) + "ms.");
+                .map(user -> new TwitterUser(user, client.getUserInfo(user).getInt("friends_count")))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        log.info("[Took " + (currentTimeMillis() - start) + " ms] Friends count: " + friendsCount);
     }
 
     @Test
@@ -54,7 +56,7 @@ public class TwitterClientTest {
                 .toBlocking()
                 .single();
 
-        log.info("Friends count: " + friendsCount + ", took " + (currentTimeMillis() - start) + "ms.");
+        log.info("[Took " + (currentTimeMillis() - start) + " ms] Friends count: " + friendsCount);
 
     }
 
@@ -69,7 +71,7 @@ public class TwitterClientTest {
 
         @Override
         public String toString() {
-            return "TwitterUser{" +
+            return "User{" +
                     "name='" + name + '\'' +
                     ", friends=" + friends +
                     '}';
