@@ -7,6 +7,10 @@ repositories {
 dependencies {
     compile         'io.reactivex:rxjava:1.1.2'
     compile         'com.mashape.unirest:unirest-java:1.4.9'
+    compile         'org.codehaus.jackson:jackson-core-asl:1.9.13'
+    compile         'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+
     testCompile     'junit:junit:4.+'
 }
 

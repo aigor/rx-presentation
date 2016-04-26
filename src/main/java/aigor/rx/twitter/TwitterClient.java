@@ -4,8 +4,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
+import rx.Observable;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -37,6 +40,27 @@ public class TwitterClient {
             authToken = getAuthToken(key, secret);
         }
         return this;
+    }
+
+    public JSONObject getUserMostPopularTweet(String screenName) {
+        long startTime = currentTimeMillis();
+        try {
+            if (authToken.isPresent()) {
+                return Unirest.get(API_BASE_URL + "search/tweets.json")
+                        .queryString("q", "from:" + screenName)
+                        .queryString("result_type", "popular")
+                        .header("Authorization", bearerAuth(authToken.get()))
+                        .asJson()
+                        .getBody()
+                        .getObject();
+            } else {
+                throw new RuntimeException("Can not connect to twitter");
+            }
+        } catch (UnirestException e){
+            throw new RuntimeException(e);
+        } finally {
+            logTime("TwitterClient.getUserInfo completed", startTime);
+        }
     }
 
     public JSONObject getRemainingRequests() {
@@ -78,6 +102,24 @@ public class TwitterClient {
         }
     }
 
+    public Observable<TwitterUserProfile> getUserProfile(String screenName) {
+        if (authToken.isPresent()) {
+            long startTime = currentTimeMillis();
+            return Observable.fromCallable(() -> {
+                ObjectMapper om = new ObjectMapper();
+                return om.readValue(om.readTree(
+                            Unirest.get(API_BASE_URL + "users/show.json")
+                                    .queryString("screen_name", screenName)
+                                    .header("Authorization", bearerAuth(authToken.get()))
+                                    .asString()
+                                    .getBody()),
+                       TwitterUserProfile.class);
+            }).doOnCompleted(() -> logTime("TwitterClient.getUserProfile completed", startTime));
+        } else {
+            return Observable.error(new RuntimeException("Can not connect to twitter"));
+        }
+    }
+
     // --- Supporting methods-------------------------------------------------------------------------------------------
 
     private static String bearerAuth(String token){
@@ -91,7 +133,7 @@ public class TwitterClient {
 
     private static Optional<String> getAuthToken(String key, String secret) {
         String token = "Basic " + bearerToken(key, secret) + " Content-Type: application/x-www-form-urlencoded;charset=UTF-8";
-        HttpResponse<JsonNode> authorization = null;
+        HttpResponse<JsonNode> authorization;
         try {
             authorization = Unirest.post(OAUTH_API_BASE_URL + "token")
                     .header("User-Agent", "Rx Demo App")

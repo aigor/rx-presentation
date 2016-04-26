@@ -36,3 +36,10 @@ Videos:
 
 Articles:
 - Schedulers (RU) (https://habrahabr.ru/company/rambler-co/blog/280388/)
+
+Good Presentations:
+- http://www.slideshare.net/allegrotech/rxjava-introduction-context
+- http://www.slideshare.net/rickbwarren/building-scalable-stateless-applications-with-rx-java
+- http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger
+- http://www.slideshare.net/SpringCentral/practical-rxjava
+- (Java 8 Streaming API vs RxJava) http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison

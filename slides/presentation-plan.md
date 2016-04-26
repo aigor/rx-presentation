@@ -33,6 +33,7 @@
 		- Requires to understand threadpools and underlying magic, take care about back pressure (it is not silver bullet)
 	* RxJava strength (2 slides, TODO: Review this):
 		- It is function, It is reactive
+		- It is polyglot: Java, Groovy, Scala, Clojure, JRuby 
 		- Good for complicated integration scenarios
 		- Allows to control execution threads
 		- Easy to compose workflows
@@ -60,10 +61,18 @@
 - I want to show strong sides of RxJava, how lightweight it is, and how easy to start using it
 - All used code should be accessible on GitHub repo
 - Main part slides should contain a link to GitHub repo
+- Good starting point: http://rxmarbles.com/
 
 ## Possible questions
 - Performance comparison - very rough, it is not JMH (TODO: Add solutions and test suite for comparison)
 - Ability to integrate with Java NIO, Netty, asynchronous servlets (TODO: Add code samples)
+- Why Callbacks are bad?
+    - No composition
+    - Callback hell
+- Why Futures are bad?
+    - Too easy to block (get())
+    - Complex beyond one level of composition
+    
 
 ## TODO for presentation
 - Find good presentation template (including pretty font)
