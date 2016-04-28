@@ -43,3 +43,7 @@ Good Presentations:
 - http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger
 - http://www.slideshare.net/SpringCentral/practical-rxjava
 - (Java 8 Streaming API vs RxJava) http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison
+
+
+TODO, FIND OUT:
+- This blog post originally used the term "functional reactive programming" or FRP. This term was used in error. RxJava does not implement "continuous time" which is a requirement for FRP from previous literature. (http://techblog.netflix.com/2013/02/rxjava-netflix-api.html)
