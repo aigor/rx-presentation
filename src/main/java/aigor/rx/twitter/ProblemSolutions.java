@@ -28,9 +28,10 @@ public class ProblemSolutions {
     }
 
     /**
-     * For stream of users
-     *  - get their profile, recent popular tweet (by retweet count)
-     *  -
+     * For stream of tweets, containing #jeeconf tag:
+     *  - get their authors profile and recent popular tweet (by retweet count)
+     *  - calculate how many tweets do we have per minute
+     *  - calculate most active author
      */
 
 }
