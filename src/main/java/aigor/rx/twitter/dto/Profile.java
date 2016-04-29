@@ -1,4 +1,4 @@
-package aigor.rx.twitter;
+package aigor.rx.twitter.dto;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * Twitter user profile.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TwitterUserProfile {
+public class Profile {
     public String screen_name;
     public String name;
     public String location;
@@ -16,7 +16,7 @@ public class TwitterUserProfile {
 
     @Override
     public String toString() {
-        return "TwitterUserProfile {" +
+        return "Profile {" +
                 "screen_name='" + screen_name + '\'' +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
