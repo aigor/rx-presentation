@@ -11,23 +11,19 @@ import rx.schedulers.Schedulers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static aigor.rx.twitter.TwitterClient.logTime;
 import static java.lang.System.currentTimeMillis;
 
 public class TwitterClientTest {
-    private static final Logger log = Logger.getLogger(TwitterClientTest.class.getName());
-
     private final String key = "ecZrPMbkGwbznWZ9KvOqHjcq2";
     private final String secret = "6hF9PhCPN7gu3kp2aqFSDSIGEGTt1qFeBtTkTCBcVRc8MA6QXr";
 
     private long startTime;
+    private TwitterClient client;
 
-    TwitterClient client;
-
-    List<String> users = Arrays.asList("siromaha", "neposuda", "ndrew", "sobakachorna", "PutinsEconomy", "wylsacom");
+    private static final List<String> users = Arrays.asList("siromaha", "neposuda", "ndrew", "sobakachorna", "PutinsEconomy", "wylsacom");
 
     @Before
     public void setUp() throws Exception {
@@ -58,7 +54,7 @@ public class TwitterClientTest {
                 .toBlocking()
                 .single();
 
-        logTime(tweets.size() + " tweets: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
+        logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
 
     @Test
@@ -79,7 +75,7 @@ public class TwitterClientTest {
                 .toBlocking()
                 .single();
 
-        logTime(tweets.size() + " tweets: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
+        logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
 
     @Test
@@ -92,12 +88,4 @@ public class TwitterClientTest {
 
         logTime("Users with their most popular tweet: \n - " + userWithTweets.stream().map(UserWithMostPopularWeet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
-
-    @Test
-    public void getUserAnfLatestPopularTweet() throws Exception {
-
-    }
-
-    // TASKS:
-    // - For username find his number of friends, number of tweets during past week, number of tweets with tags
 }
