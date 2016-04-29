@@ -1,4 +1,4 @@
-package aigor.rx.twitter.util;
+package aigor.rx.twitter;
 
 import aigor.rx.twitter.TwitterClient;
 import aigor.rx.twitter.dto.Profile;

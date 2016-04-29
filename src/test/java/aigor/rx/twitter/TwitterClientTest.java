@@ -4,7 +4,6 @@ import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
 import aigor.rx.twitter.dto.UserWithMostPopularWeet;
 import aigor.rx.twitter.util.LogMessageFormat;
-import aigor.rx.twitter.util.ProblemSolutions;
 import org.junit.Before;
 import org.junit.Test;
 import rx.Observable;
