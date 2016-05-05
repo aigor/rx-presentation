@@ -29,8 +29,10 @@ import static java.lang.System.currentTimeMillis;
 public class TwitterClient {
     private static final Logger log = Logger.getLogger(TwitterClient.class.getName());
 
-    static String API_BASE_URL = "https://api.twitter.com/1.1/";
-    static String OAUTH_API_BASE_URL = "https://api.twitter.com/oauth2/";
+    static String API_BASE_URL          = "https://api.twitter.com/1.1/";
+    static String OAUTH_API_BASE_URL    = "https://api.twitter.com/oauth2/";
+
+    static String STREAM_BASE_URL       = "https://stream.twitter.com/1.1/";
 
     private final String key;
     private final String secret;
@@ -112,6 +114,24 @@ public class TwitterClient {
                         .asJson()
                         .getBody()
                         .getObject();
+            } else {
+                throw new RuntimeException("Can not connect to twitter");
+            }
+        } catch (UnirestException e) {
+            throw new RuntimeException(e);
+        } finally {
+            logTime("getUserInfo completed", startTime);
+        }
+    }
+
+    public String getTweetStreamForTag(String tag){
+        try {
+            if (authToken.isPresent()) {
+                return Unirest.get(STREAM_BASE_URL + "statuses/filter.json")
+                        .header("Authorization", bearerAuth(authToken.get()))
+                        .queryString("track", tag)
+                        .asString()
+                        .getBody();
             } else {
                 throw new RuntimeException("Can not connect to twitter");
             }

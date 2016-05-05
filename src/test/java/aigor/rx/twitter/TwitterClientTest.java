@@ -3,6 +3,7 @@ package aigor.rx.twitter;
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
 import aigor.rx.twitter.dto.UserWithMostPopularWeet;
+import org.json.JSONObject;
 import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -57,5 +58,11 @@ public class TwitterClientTest extends BaseTest {
                 .single();
 
         logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
+    }
+
+    @Test
+    public void getStream() throws Exception {
+        String trump = client.getTweetStreamForTag("Trump");
+        logTime("Trump: " + trump, startTime);
     }
 }
