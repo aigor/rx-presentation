@@ -3,35 +3,16 @@ package aigor.rx.twitter;
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
 import aigor.rx.twitter.dto.UserWithMostPopularWeet;
-import aigor.rx.twitter.util.LogMessageFormat;
-import org.junit.Before;
 import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static aigor.rx.twitter.TwitterClient.logTime;
-import static java.lang.System.currentTimeMillis;
 
-public class TwitterClientTest {
-    private final String key = "ecZrPMbkGwbznWZ9KvOqHjcq2";
-    private final String secret = "6hF9PhCPN7gu3kp2aqFSDSIGEGTt1qFeBtTkTCBcVRc8MA6QXr";
-
-    private long startTime;
-    private TwitterClient client;
-
-    private static final List<String> users = Arrays.asList("siromaha", "neposuda", "ndrew", "sobakachorna", "PutinsEconomy", "wylsacom");
-
-    @Before
-    public void setUp() throws Exception {
-        LogMessageFormat.alterLogging();
-        startTime = currentTimeMillis();
-        client = new TwitterClient(key, secret, startTime);
-        client.connect();
-    }
+public class TwitterClientTest extends BaseTest {
 
     @Test
     public void getUserProfiles() throws Exception {
@@ -76,16 +57,5 @@ public class TwitterClientTest {
                 .single();
 
         logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
-    }
-
-    @Test
-    public void getUserProfileNumberOfTweets() throws Exception {
-        List<UserWithMostPopularWeet> userWithTweets = Observable.from(users)
-                .flatMap(u -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(client, u))
-                .toList()
-                .toBlocking()
-                .single();
-
-        logTime("Users with their most popular tweet: \n - " + userWithTweets.stream().map(UserWithMostPopularWeet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
 }

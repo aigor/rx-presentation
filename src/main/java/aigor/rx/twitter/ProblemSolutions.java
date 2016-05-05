@@ -1,6 +1,5 @@
 package aigor.rx.twitter;
 
-import aigor.rx.twitter.TwitterClient;
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
 import aigor.rx.twitter.dto.UserWithMostPopularWeet;
