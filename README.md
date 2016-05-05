@@ -48,3 +48,6 @@ Good Presentations:
 TODO, FIND OUT:
 - This blog post originally used the term "functional reactive programming" or FRP. This term was used in error. RxJava does not implement "continuous time" which is a requirement for FRP from previous literature. (http://techblog.netflix.com/2013/02/rxjava-netflix-api.html)
 - Look at: https://github.com/sqshq/PiggyMetrics (Spring based Microservice solution)
+
+Code samples:
+- https://github.com/twitter/hbc - Twitter Streaming client
