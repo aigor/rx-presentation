@@ -2,8 +2,6 @@ package aigor.rx.twitter;
 
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
-import aigor.rx.twitter.dto.UserWithMostPopularWeet;
-import org.json.JSONObject;
 import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -61,8 +59,12 @@ public class TwitterClientTest extends BaseTest {
     }
 
     @Test
-    public void getStream() throws Exception {
-        String trump = client.getTweetStreamForTag("Trump");
-        logTime("Trump: " + trump, startTime);
+    public void testStream() throws Exception {
+        twitterStreamClient.getStream("spacex")
+                .take(10)
+                .toBlocking()
+                .subscribe( n -> logTime("New tweet: " + n, startTime),
+                            e -> logTime("ERROR: " + e.getMessage(), startTime),
+                            () -> logTime("Stream finished", startTime));
     }
 }

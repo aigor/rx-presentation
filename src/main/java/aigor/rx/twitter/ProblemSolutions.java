@@ -2,7 +2,7 @@ package aigor.rx.twitter;
 
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
-import aigor.rx.twitter.dto.UserWithMostPopularWeet;
+import aigor.rx.twitter.dto.UserWithTweet;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -15,14 +15,14 @@ public class ProblemSolutions {
      * Read out user profile and most popular recent tweet (by retweet count).
      * Input params: twitter client, user name
      */
-    public Observable<UserWithMostPopularWeet> getUserProfileAndLatestPopularTweet(final TwitterClient client, final String screenName) {
+    public Observable<UserWithTweet> getUserProfileAndLatestPopularTweet(final TwitterClient client, final String screenName) {
         return Observable.just(screenName).flatMap(u -> {
             Observable<Profile> profile = client.getUserProfile(u).subscribeOn(Schedulers.io());
             Observable<Tweet> tweet = client.getUserRecentTweets(u)
                     .defaultIfEmpty(null)
                     .reduce((t1, t2) -> t1.retweet_count > t2.retweet_count ? t1 : t2)
                     .subscribeOn(Schedulers.io());
-            return Observable.zip(profile, tweet, UserWithMostPopularWeet::new);
+            return Observable.zip(profile, tweet, UserWithTweet::new);
         });
     }
 

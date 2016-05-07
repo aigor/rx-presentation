@@ -31,7 +31,7 @@ public class LogMessageFormat {
             String throwable = getThrowableMessage(record);
             String logger = record.getLoggerName();
 
-            return (new SimpleDateFormat("HH:mm:ss.SSS")).format(new Date(record.getMillis())) + " " + String.format("[%3$7s] [T:%6$4s] [%2$-40s] %4$s%5$s%n",
+            return (new SimpleDateFormat("HH:mm:ss.SSS")).format(new Date(record.getMillis())) + " " + String.format("[%3$7s] [T:%6$4s] [%2$-20s] %4$s%5$s%n",
                     source, logger, record.getLevel(), message, throwable, record.getThreadID());
         }
 
