@@ -66,12 +66,18 @@ public class TwitterStreamClient {
             hosebirdClient.connect();
 
             while (!hosebirdClient.isDone() && !s.isUnsubscribed()) {
+                String msg = null;
                 try {
-                    JsonNode jsonNode = om.readTree(msgQueue.take());
-                    Profile user = om.readValue(jsonNode.get("user"), Profile.class);
-                    Tweet tweet = om.readValue(jsonNode, Tweet.class);
-                    s.onNext(new UserWithTweet(user, tweet));
-                } catch ( IOException | InterruptedException e) {
+                    msg = msgQueue.take();
+                    JsonNode jsonNode = om.readTree(msg);
+                    if (!jsonNode.has("limit")) {
+                        Profile user = om.readValue(jsonNode.get("user"), Profile.class);
+                        Tweet tweet = om.readValue(jsonNode, Tweet.class);
+                        s.onNext(new UserWithTweet(user, tweet));
+                    } else {
+                        System.out.println("WE HAVE ACHIEVED RATE LIMIT...");
+                    }
+                } catch (Exception e) {
                     s.onError(e);
                 }
             }

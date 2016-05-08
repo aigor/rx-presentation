@@ -2,14 +2,17 @@ package aigor.rx.twitter;
 
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
+import aigor.rx.twitter.dto.UserWithTweet;
 import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static aigor.rx.twitter.TwitterClient.logTime;
+import static java.util.logging.Level.WARNING;
 
 public class TwitterClientTest extends BaseTest {
 
@@ -58,13 +61,33 @@ public class TwitterClientTest extends BaseTest {
         logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
 
+    // For stream of tweets track most popular user, his most popular tweet, amount of tweets per minute
+
     @Test
     public void testStream() throws Exception {
-        twitterStreamClient.getStream("spacex")
-                .take(10)
+        Observable<UserWithTweet> tweetStream = twitterStreamClient.getStream("победа");
+
+        tweetStream
+                .window(10, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .subscribe(window ->
+                                window.count()
+                                        .subscribeOn(Schedulers.io())
+                                        .subscribe(n -> log.info("In 10 sec received tweets: " + n))
+                );
+
+        tweetStream
+                .map(u -> u.profile)
+                .scan((u1, u2) -> u1.followers_count > u2.followers_count ? u1: u2)
+                .distinctUntilChanged()
+                .flatMap(p -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(client, p.screen_name))
+                .subscribeOn(Schedulers.io())
+                .subscribe( p -> log.info("Most popular User so far: " + p),
+                            e -> log.log(WARNING, "Exception received", e));
+
+        tweetStream
                 .toBlocking()
-                .subscribe( n -> logTime("New tweet: " + n, startTime),
-                            e -> logTime("ERROR: " + e.getMessage(), startTime),
-                            () -> logTime("Stream finished", startTime));
+                .subscribe( n -> { /* logTime("New tweet: " + n, startTime) */ },
+                            e -> log.log(WARNING, "Exception received", e));
     }
 }

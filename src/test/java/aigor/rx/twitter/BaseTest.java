@@ -5,6 +5,7 @@ import org.junit.Before;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -12,6 +13,8 @@ import static java.lang.System.currentTimeMillis;
  * Base test - setup
  */
 class BaseTest {
+    public static final Logger log = Logger.getLogger(BaseTest.class.getName());
+
     private final String key = "ecZrPMbkGwbznWZ9KvOqHjcq2";
     private final String secret = "6hF9PhCPN7gu3kp2aqFSDSIGEGTt1qFeBtTkTCBcVRc8MA6QXr";
 
