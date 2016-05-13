@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static aigor.rx.twitter.TwitterClient.logTime;
-import static java.util.logging.Level.WARNING;
 
 public class TwitterClientTest extends BaseTest {
 
@@ -63,9 +62,10 @@ public class TwitterClientTest extends BaseTest {
 
     // For stream of tweets track most popular user, his most popular tweet, amount of tweets per minute
 
+    // TODO: Add error handling, add retry,
     @Test
     public void testStream() throws Exception {
-        Observable<UserWithTweet> tweetStream = twitterStreamClient.getStream("победа");
+        Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JEEConf", "Java", "Trump");
 
         tweetStream
                 .window(10, TimeUnit.SECONDS)
@@ -76,18 +76,37 @@ public class TwitterClientTest extends BaseTest {
                                         .subscribe(n -> log.info("In 10 sec received tweets: " + n))
                 );
 
-        tweetStream
-                .map(u -> u.profile)
-                .scan((u1, u2) -> u1.followers_count > u2.followers_count ? u1: u2)
-                .distinctUntilChanged()
-                .flatMap(p -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(client, p.screen_name))
-                .subscribeOn(Schedulers.io())
-                .subscribe( p -> log.info("Most popular User so far: " + p),
-                            e -> log.log(WARNING, "Exception received", e));
+        Observable<Tweet> tweetsFromMorePopularUsers = tweetStream
+                .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+                .distinctUntilChanged();
 
-        tweetStream
-                .toBlocking()
-                .subscribe( n -> { /* logTime("New tweet: " + n, startTime) */ },
-                            e -> log.log(WARNING, "Exception received", e));
+        tweetsFromMorePopularUsers
+                .subscribe(p -> log.info("New the most followed user: " + p.author
+                        + " (followed by: " + p.author_followers
+                        + ") with tweet: " + p.text)
+                );
+
+        tweetsFromMorePopularUsers
+                .flatMap(t -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(client, t.author))
+                .subscribeOn(Schedulers.io())
+                .subscribe( p ->
+                        log.info("The most popular tweet of user "
+                                + p.profile.name + ": " + p.tweet)
+                );
+
+
+        tweetsFromMorePopularUsers
+                .map(p -> p.author)
+                .flatMap(name -> {
+                        Observable<Profile> profile = client.getUserProfile(name)
+                                .subscribeOn(Schedulers.io());
+                        Observable<Tweet> tweet = client.getUserRecentTweets(name)
+                                .defaultIfEmpty(null)
+                                .reduce((t1, t2) -> t1.retweet_count > t2.retweet_count ? t1 : t2)
+                                .subscribeOn(Schedulers.io());
+                        return Observable.zip(profile, tweet, UserWithTweet::new);
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe( p -> log.info("The most popular tweet of user " + p.profile.name + ": " + p.tweet));
     }
 }

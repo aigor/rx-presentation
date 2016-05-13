@@ -10,6 +10,8 @@ public class Tweet {
     public String text;
     public int favorite_count;
     public int retweet_count;
+    public String author;
+    public int author_followers;
 
     @Override
     public String toString() {

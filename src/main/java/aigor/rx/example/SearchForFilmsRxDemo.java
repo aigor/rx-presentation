@@ -1,4 +1,4 @@
-package aigor.rx;
+package aigor.rx.example;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -7,9 +7,11 @@ import rx.schedulers.Schedulers;
 import java.util.concurrent.*;
 
 /**
- * File with RxDemo
+ * SearchForFilmsRxDemo - simple example for building pipeline with two thread pools for execution.
+ *
+ * TODO: Add calculation for and generic info
  */
-public class RxDemo {
+public class SearchForFilmsRxDemo {
 
     private static ExecutorService rxExecutor = Executors.newWorkStealingPool(100);
     private static ExecutorService requestExecutor = Executors.newFixedThreadPool(50);
@@ -61,10 +63,6 @@ public class RxDemo {
         return mockClient("image_" + id);
     }
 
-    private static void logTime(String message, long startTime) {
-        System.out.println(String.format("[%4s ms] [T:%3s] %s", (System.currentTimeMillis() - startTime), Thread.currentThread().getId(), message));
-    }
-
     private static <T> Observable<T> mockClient(T... ts) {
         return Observable.create((Subscriber<? super T> s) -> {
             // simulate latency
@@ -80,6 +78,13 @@ public class RxDemo {
         // note the use of subscribeOn to make an otherwise synchronous Observable async
     }
 
+    // --- Supporting methods ------------------------------------------------------------------------------------------
+    private static void logTime(String message, long startTime) {
+        System.out.println(String.format("[%4s ms] [T:%3s] %s",
+                (System.currentTimeMillis() - startTime), Thread.currentThread().getId(), message));
+    }
+
+    // --- DTO Classes -------------------------------------------------------------------------------------------------
     public static class TileResponse {
         public TileResponse(Tile t, Reviews r, String u) {
             // store the values

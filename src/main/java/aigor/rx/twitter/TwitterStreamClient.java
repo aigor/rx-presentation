@@ -32,7 +32,7 @@ public class TwitterStreamClient {
     private final String token;
     private final String tokenSecret;
 
-    private PublishSubject<UserWithTweet> tweetStream;
+    private PublishSubject<Tweet> tweetStream;
 
     public TwitterStreamClient(String consumerKey, String consumerSecret, String token, String tokenSecret) {
         this.consumerKey = consumerKey;
@@ -42,7 +42,7 @@ public class TwitterStreamClient {
         this.tweetStream = PublishSubject.create();
     }
 
-    public Observable<UserWithTweet> getStream(String... tags){
+    public Observable<Tweet> getStream(String... tags){
         /** Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */
         BlockingQueue<String> msgQueue = new LinkedBlockingQueue<>(100000);
 
@@ -62,7 +62,7 @@ public class TwitterStreamClient {
         Client hosebirdClient = builder.build();
         ObjectMapper om = new ObjectMapper();
 
-        Observable.<UserWithTweet>create(s -> {
+        Observable.<Tweet>create(s -> {
             hosebirdClient.connect();
 
             while (!hosebirdClient.isDone() && !s.isUnsubscribed()) {
@@ -73,7 +73,9 @@ public class TwitterStreamClient {
                     if (!jsonNode.has("limit")) {
                         Profile user = om.readValue(jsonNode.get("user"), Profile.class);
                         Tweet tweet = om.readValue(jsonNode, Tweet.class);
-                        s.onNext(new UserWithTweet(user, tweet));
+                        tweet.author = user.screen_name;
+                        tweet.author_followers = user.followers_count;
+                        s.onNext(tweet);
                     } else {
                         System.out.println("WE HAVE ACHIEVED RATE LIMIT...");
                     }

@@ -1,7 +1,7 @@
 package aigor.rx.twitter.dto;
 
 /**
- * DTO To represent user and most popular recent tweet
+ * DTO to represent user and tweet
  */
 public class UserWithTweet {
     public Profile profile;

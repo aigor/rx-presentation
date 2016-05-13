@@ -7,6 +7,7 @@ import org.junit.Test;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class ProblemSolutionsTest extends BaseTest {
 
     @Test
     public void getUserProfileNumberOfTweets_presentation() throws Exception {
-        List<UserWithTweet> userWithTweets = Observable.just("siromaha")
+        List<UserWithTweet> userWithTweets = Observable.from(Arrays.asList("jeeconf", "xpinjection"))
                 .flatMap(u -> {
                     Observable<Profile> profile = client.getUserProfile(u).subscribeOn(Schedulers.io());
                     Observable<Tweet> tweet = client.getUserRecentTweets(u)

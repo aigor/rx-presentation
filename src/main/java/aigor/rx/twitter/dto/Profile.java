@@ -3,7 +3,7 @@ package aigor.rx.twitter.dto;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
- * Twitter user profile.
+ * DTO to represent Twitter user profile.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Profile {
@@ -13,6 +13,7 @@ public class Profile {
     public int statuses_count;
     public int friends_count;
     public int followers_count;
+
 
     @Override
     public String toString() {

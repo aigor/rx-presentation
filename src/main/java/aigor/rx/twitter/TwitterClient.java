@@ -22,7 +22,14 @@ import java.util.stream.StreamSupport;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * Client for twitter
+ * Client for Twitter
+ * User Twitter REST API
+ *
+ * Uses simple implementation of OAuth 2 protocol
+ * HTTP requests are done using Unirest library
+ *
+ * REST API specification: https://dev.twitter.com/rest/public
+ * OAuth 2 Twitter protocol: https://dev.twitter.com/oauth/application-only
  */
 public class TwitterClient {
     private static final Logger log = Logger.getLogger(TwitterClient.class.getSimpleName());
@@ -59,7 +66,7 @@ public class TwitterClient {
         if (authToken.isPresent()) {
             return Observable.fromCallable(() -> {
                 ObjectMapper om = new ObjectMapper();
-                logTime("getUserProfile started for: " + screenName, startTime);
+                debugTime("getUserProfile started for: " + screenName, startTime);
                 return om.readValue(om.readTree(
                         Unirest.get(API_BASE_URL + "users/show.json")
                                 .queryString("screen_name", screenName)
@@ -67,7 +74,7 @@ public class TwitterClient {
                                 .asString()
                                 .getBody()),
                         Profile.class);
-            }).doOnCompleted(() -> logTime("getUserProfile for completed for: " + screenName, startTime));
+            }).doOnCompleted(() -> debugTime("getUserProfile for completed for: " + screenName, startTime));
         } else {
             return Observable.error(new RuntimeException("Can not connect to twitter"));
         }
@@ -77,7 +84,7 @@ public class TwitterClient {
         if (authToken.isPresent()) {
             return Observable.fromCallable(() -> {
                 ObjectMapper om = new ObjectMapper();
-                logTime("getUserRecentTweets started for: " + screenName, startTime);
+                debugTime("getUserRecentTweets started for: " + screenName, startTime);
                 JSONObject searchResults = Unirest.get(API_BASE_URL + "search/tweets.json")
                         .header("Authorization", bearerAuth(authToken.get()))
                         .queryString("q", "from:" + screenName)
@@ -96,7 +103,7 @@ public class TwitterClient {
                         }).collect(Collectors.toList());
             })
             .flatMap(Observable::from)
-            .doOnCompleted(() -> logTime("getUserRecentTweets for completed for: " + screenName, startTime));
+            .doOnCompleted(() -> debugTime("getUserRecentTweets for completed for: " + screenName, startTime));
         } else {
             return Observable.error(new RuntimeException("Can not connect to twitter"));
         }
@@ -116,7 +123,7 @@ public class TwitterClient {
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         } finally {
-            logTime("getUserInfo completed", startTime);
+            debugTime("getUserInfo completed", startTime);
         }
     }
 
@@ -159,4 +166,8 @@ public class TwitterClient {
     public static void logTime(String message, long startTime) {
         log.info(String.format("[%4s ms] %s", (currentTimeMillis() - startTime), message));
     }
+    public static void debugTime(String message, long startTime) {
+        log.fine(String.format("[%4s ms] %s", (currentTimeMillis() - startTime), message));
+    }
+
 }

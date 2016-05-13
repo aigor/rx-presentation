@@ -7,13 +7,14 @@ Good starting points:
 - https://www.coursera.org/course/reactive (Coursera Scala+Rx course)
 
 Definitions:
-- Functional Reactive Programming (in Scala) - FRP  /TODO: define/
+- Functional Reactive Programming (in Scala) - FRP, RxJava is not FRP but very related!
 
 Java libraries:
 - RxJava (has ports to Groovy, Clojure, Scala, Kotlin)
+- Has RxSwift, RxJS, RxC++ ports
 
 Scala libraries:
-- RxScala (http://reactivex.io/rxscala/) /TODO: investigate/
+- RxScala - RxJava binding (http://reactivex.io/rxscala/)
 - Scientific paper: Ingo Maier Martin Odersky: Deprecating the Observer Pattern with Scala.React (http://infoscience.epfl.ch/record/176887/files/DeprecatingObservers2012.pdf)
 - Scala.Rx (https://github.com/lihaoyi/scala.rx) /experimental feature of Scala SDK/
 
@@ -23,7 +24,6 @@ Other platforms:
 Key concepts to dive in:
 - Backpressure (!!)
 - Low level threading control (!!)
-- Railway Oriented Programming (does it apply to Reactive pattern?)
 
 Videos:
 - (!! Learn you some Rx for the greater good) https://www.youtube.com/watch?v=BujWQSjtplc
@@ -45,9 +45,13 @@ Good Presentations:
 - (Java 8 Streaming API vs RxJava) http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison
 
 
-TODO, FIND OUT:
-- This blog post originally used the term "functional reactive programming" or FRP. This term was used in error. RxJava does not implement "continuous time" which is a requirement for FRP from previous literature. (http://techblog.netflix.com/2013/02/rxjava-netflix-api.html)
-- Look at: https://github.com/sqshq/PiggyMetrics (Spring based Microservice solution)
+Notes:
+- This blog post originally used the term "functional reactive programming" or FRP. This term was used in error.
+    RxJava does not implement "continuous time" which is a requirement for FRP. (http://techblog.netflix.com/2013/02/rxjava-netflix-api.html)
 
-Code samples:
+Code samples for Demo:
 - https://github.com/twitter/hbc - Twitter Streaming client
+
+Other interesting links:
+- Look at: https://github.com/sqshq/PiggyMetrics (Spring based Microservice solution)
+- Railway Oriented Programming (does it apply to Reactive pattern?)

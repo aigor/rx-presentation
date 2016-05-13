@@ -12,7 +12,7 @@ import static java.lang.System.currentTimeMillis;
 /**
  * Base test - setup
  */
-class BaseTest {
+abstract class BaseTest {
     public static final Logger log = Logger.getLogger(BaseTest.class.getName());
 
     private final String key = "ecZrPMbkGwbznWZ9KvOqHjcq2";
@@ -23,7 +23,7 @@ class BaseTest {
 
     long startTime;
     TwitterClient client;
-    TwitterStreamClient twitterStreamClient;
+    TwitterStreamClient streamClient;
 
     static final List<String> users = Arrays.asList("siromaha", "neposuda", "ndrew", "sobakachorna", "PutinsEconomy", "wylsacom");
 
@@ -34,6 +34,6 @@ class BaseTest {
         client = new TwitterClient(key, secret, startTime);
         client.connect();
 
-        twitterStreamClient = new TwitterStreamClient(key, secret, token, tokenSecret);
+        streamClient = new TwitterStreamClient(key, secret, token, tokenSecret);
     }
 }
