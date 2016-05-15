@@ -2,8 +2,10 @@
 
 This repo is a home for small presentation about RxJava, that should be given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links.
 
-Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda)
-Demo application developed along presentation slides: [Twitter Breeze](http://www.slideshare.net/neposuda)
+Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
+
+Demo application developed along presentation slides: [Twitter Breeze](http://www.slideshare.net/neposuda).
+
 
 Good starting points:
 - [Reactive manifesto](http://www.reactivemanifesto.org)
