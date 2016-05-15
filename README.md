@@ -6,10 +6,9 @@ Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/nep
 
 Demo application developed along presentation slides: [Twitter Breeze](http://www.slideshare.net/neposuda).
 
-__Short Content of the Presentation__
+### Short Content of the Presentation
 
-
-__If You Want to Learn More about Reactive Programming & RxJava__
+### If You Want to Learn More about Reactive Programming & RxJava
 
 Good starting points:
 - [Reactive manifesto](http://www.reactivemanifesto.org)
