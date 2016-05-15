@@ -15,6 +15,7 @@ Good starting points:
 - [Collection of open source projects & documentation, including Netflix JavaRx](http://reactivex.io)
 
 Recommended tutorials and courses:
+- [Dan Lew: Grokking RxJava](http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
 - [Intro To RxJava](https://github.com/Froussios/Intro-To-RxJava)
 - [Coursera: Principles of Reactive Programming](https://www.coursera.org/course/reactive)
 
