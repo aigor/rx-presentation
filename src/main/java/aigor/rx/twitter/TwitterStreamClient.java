@@ -25,6 +25,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Client that allows to listen stream data from Twitter
+ * 
+ * TODO: Use Observable.using here !
  */
 public class TwitterStreamClient {
     private final String consumerKey;
