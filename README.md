@@ -1,6 +1,6 @@
 # RxJava Applied: Concise Examples where It Shines
 
-This repo is a home for small presentation about RxJava, that should be given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links.
+This repo is a home for small presentation about RxJava, that should be given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
 Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
@@ -30,7 +30,7 @@ Used libraries:
 - [Twitter Streaming client](https://github.com/twitter/hbc)
 - [Mockito](http://mockito.org)
 
-### If You Want to Learn More about Reactive Programming & RxJava
+## If You Want to Learn More about Reactive Programming & RxJava
 
 Good starting points:
 - [Reactive manifesto](http://www.reactivemanifesto.org)
