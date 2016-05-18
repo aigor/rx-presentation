@@ -62,7 +62,7 @@ Articles:
 - [Schedulers (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
 
 Good Presentations:
-- [RxJava - introduction & design](ttp://www.slideshare.net/allegrotech/rxjava-introduction-context)
+- [RxJava - introduction & design](http://www.slideshare.net/allegrotech/rxjava-introduction-context)
 - [Building Scalable Stateless Applications with RxJava](http://www.slideshare.net/rickbwarren/building-scalable-stateless-applications-with-rx-java)
 - [Reactive Programming with RxJava for Efficient Data Access](http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger)
 - [Simon Baslé: Practical RxJava](http://www.slideshare.net/SpringCentral/practical-rxjava)
