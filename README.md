@@ -4,9 +4,31 @@ This repo is a home for small presentation about RxJava, that should be given on
 
 Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
-Demo application developed along presentation slides: [Twitter Breeze](http://www.slideshare.net/neposuda).
-
 ### Short Content of the Presentation
+
+__RxJava short history__
+- Nov 17, 2009	Rx for .NET v.1.0 (shipped with .NET 4.0)
+- Mar 17, 2010	Reactive Extensions for JS released 
+- Aug 15, 2012	Rx for .NET v.2.0
+- Feb, 2013		Ben Christensen starts library porting to JVM
+- Nov 18, 2014	RxJava v. 1.0.0 
+- May 5, 2016   RxJava v. 1.1.5 (latest at the moment)
+
+__Requirements: Stream of Tweets__
+
+__Twitter API__
+Twitter Stream API (WebSocket alike):
+- Doc: https://dev.twitter.com/streaming/overview
+- Library: com.twitter:hbc-core:2.2.0
+Twitter REST API:
+- GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf
+- GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
+
+
+Used libraries:
+- [Unirest](http://unirest.io/java.html)
+- [Twitter Streaming client](https://github.com/twitter/hbc)
+- [Mockito](http://mockito.org)
 
 ### If You Want to Learn More about Reactive Programming & RxJava
 
@@ -36,32 +58,12 @@ Recommended videos:
 - [Chris Richardson: Futures and Rx Observables: powerful abstractions for consuming web services asynchronously](https://www.youtube.com/watch?v=aZkwIA4k2xU)
 - [Roland Kuhn: Reactive Design Patterns](https://www.youtube.com/watch?v=nSfXcSWq0ug)
 
-
-
-Key concepts to dive in:
-- Backpressure (!!)
-- Low level threading control (!!)
-
 Articles:
-- Schedulers (RU) (https://habrahabr.ru/company/rambler-co/blog/280388/)
+- [Schedulers (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
 
 Good Presentations:
-- http://www.slideshare.net/allegrotech/rxjava-introduction-context
-- http://www.slideshare.net/rickbwarren/building-scalable-stateless-applications-with-rx-java
-- http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger
-- http://www.slideshare.net/SpringCentral/practical-rxjava
-- (Java 8 Streaming API vs RxJava) http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison
-
-Notes:
-- This blog post originally used the term "functional reactive programming" or FRP. This term was used in error.
-    RxJava does not implement "continuous time" which is a requirement for FRP. (http://techblog.netflix.com/2013/02/rxjava-netflix-api.html)
-
-Code samples for Demo:
-- https://github.com/twitter/hbc - Twitter Streaming client
-
-Other interesting links:
-- Look at: https://github.com/sqshq/PiggyMetrics (Spring based Microservice solution)
-- Railway Oriented Programming (does it apply to Reactive pattern?)
-
-
-TODO: Port slides here, with code samples!
+- [RxJava - introduction & design](ttp://www.slideshare.net/allegrotech/rxjava-introduction-context)
+- [Building Scalable Stateless Applications with RxJava](http://www.slideshare.net/rickbwarren/building-scalable-stateless-applications-with-rx-java)
+- [Reactive Programming with RxJava for Efficient Data Access](http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger)
+- [Simon Baslé: Practical RxJava](http://www.slideshare.net/SpringCentral/practical-rxjava)
+- [Java 8 Streaming API vs RxJava](http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison)
