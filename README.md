@@ -62,12 +62,25 @@ class UserWithTweet {
 }
 ```
 
-#### Solution compleate diagram
+#### Solution diagram
 
-#### Solution getUserAndPopularTweet(userName)
+#### Solution diagram for: getUserAndPopularTweet(userName)
+
+#### Getting user profile synchronously
+```java
+Profile getUserProfile(String screenName) {       
+      ObjectMapper om = new ObjectMapper();
+      return (Profile) om.readValue(om.readTree(
+            Unirest.get(API_BASE_URL + "users/show.json")
+                   .queryString("screen_name", screenName)
+                   .header("Authorization", bearerAuth(authToken.get()))
+                   .asString()
+                   .getBody()),
+            Profile.class);
+}
+```
 
 #### Getting user profile asynchronously
-
 ```java
 Observable<Profile> getUserProfile(String screenName) {
    if (authToken.isPresent()) {
