@@ -153,7 +153,7 @@ streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
 
 #### Short conclusions
 
-Pitfals:
+Pitfalls:
 - API is big (150+ methods to remember)
 - Requires to understand underlying magic
 - Hard to debug
