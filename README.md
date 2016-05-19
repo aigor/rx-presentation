@@ -32,13 +32,13 @@ Having stream of new tweets (based on keywords):
 - Track and report most retweeted tweet of most popular user
 
 __Entities used in solution__
-    
-      class Tweet {
-         String text;
-         int favorite_count;
-         String author;
-         int author_followers;
-      }
+  
+    class Tweet {
+        String text;
+        int favorite_count;
+        String author;
+        int author_followers;
+    }
 
 __Used libraries__
 - [RxJava](https://github.com/ReactiveX/RxJava)
