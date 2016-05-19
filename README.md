@@ -27,7 +27,8 @@ Twitter REST API:
 - GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
 
 
-Used libraries:
+__Used libraries:__
+- [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
 - [Twitter Streaming client](https://github.com/twitter/hbc)
 - [Mockito](http://mockito.org)
