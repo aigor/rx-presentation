@@ -5,8 +5,7 @@ This repo is a home for small presentation about RxJava, which is given on [JEEC
 Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
 ## Short Content of the Presentation
-
-__RxJava short history__
+#### RxJava short history
 
 | Date          | What happended                                    | 
 | ------------- | ------------------------------------------------- |
@@ -17,7 +16,7 @@ __RxJava short history__
 | Nov 18, 2014	| RxJava v. 1.0.0                                   | 
 | May 5, 2016   | RxJava v. 1.1.5 (latest at the moment)            | 
 
-__Requirements: Stream of Tweets__
+#### Requirements: Stream of Tweets
 
 ```
 Having stream of new tweets (based on keywords):
@@ -25,7 +24,7 @@ Having stream of new tweets (based on keywords):
 - Track and report most retweeted tweet of most popular user
 ```
 
-__Twitter API__
+#### Twitter API
 
 Twitter Stream API (WebSocket alike):
 - Doc: https://dev.twitter.com/streaming/overview
@@ -35,7 +34,7 @@ Twitter REST API:
 - GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf
 - GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
 
-__Entities used in solution__
+#### Entities used in solution
 
 ```java  
 class Tweet {
@@ -63,7 +62,7 @@ class UserWithTweet {
 }
 ```
 
-__Used libraries__
+#### Used libraries
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
 - [Twitter Streaming Client: twitter-hbc](https://github.com/twitter/hbc)
