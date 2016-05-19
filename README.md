@@ -28,11 +28,11 @@ Having stream of new tweets (based on keywords):
 
 Twitter Stream API (WebSocket alike):
 - Doc: https://dev.twitter.com/streaming/overview
-- Library: com.twitter:hbc-core:2.2.0
+- Library: ```com.twitter:hbc-core:2.2.0```
 
 Twitter REST API:
-- GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf
-- GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
+- ```GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf```
+- ```GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf```
 
 #### Entities used in solution
 
