@@ -42,6 +42,23 @@ class Tweet {
 }
 ```
 
+```java
+class Profile {
+   String screen_name;
+   String name;
+   String location;
+   int statuses_count;
+   int followers_count;
+}
+```
+
+```java
+class UserWithTweet {
+   Profile profile;
+   Tweet tweet;
+}
+```
+
 __Used libraries__
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
