@@ -64,6 +64,8 @@ class UserWithTweet {
 
 #### Solution diagram
 
+![Solution diagram](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/RxExample-1.png)
+
 #### Getting user profile synchronously
 ```java
 Profile getUserProfile(String screenName) {       
