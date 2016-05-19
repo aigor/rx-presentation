@@ -4,7 +4,7 @@ This repo is a home for small presentation about RxJava, which is given on [JEEC
 
 Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
-### Short Content of the Presentation
+## Short Content of the Presentation
 
 __RxJava short history__
 
