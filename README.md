@@ -19,6 +19,12 @@ __RxJava short history__
 
 __Requirements: Stream of Tweets__
 
+```
+Having stream of new tweets (based on keywords):
+- Track and report most followed tweet author in stream
+- Track and report most retweeted tweet of most popular user
+```
+
 __Twitter API__
 
 Twitter Stream API (WebSocket alike):
@@ -28,12 +34,6 @@ Twitter Stream API (WebSocket alike):
 Twitter REST API:
 - GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf
 - GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
-
-__Use case - requirements__
-
-Having stream of new tweets (based on keywords):
-- Track and report most followed tweet author in stream
-- Track and report most retweeted tweet of most popular user
 
 __Entities used in solution__
 
