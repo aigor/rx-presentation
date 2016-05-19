@@ -67,3 +67,4 @@ Reactive programming for Scala:
 
 Reactive programming for other platforms:
 - [.NET F#: Functional Reactive Programming](https://fsharpforfunandprofit.com/posts/concurrency-reactive/)
+- [RxSwift: Functional Reactive Programming with RxSwift](https://realm.io/news/slug-max-alexander-functional-reactive-rxswift/)
