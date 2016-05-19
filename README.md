@@ -30,6 +30,7 @@ Twitter REST API:
 - GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
 
 __Use case - requirements__
+
 Having stream of new tweets (based on keywords):
 - Track and report most followed tweet author in stream
 - Track and report most retweeted tweet of most popular user
