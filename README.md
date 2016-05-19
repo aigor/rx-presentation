@@ -18,11 +18,9 @@ Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/nep
 
 #### Requirements: Stream of Tweets
 
-```
-Having stream of new tweets (based on keywords):
-- Track and report most followed tweet author in stream
-- Track and report most retweeted tweet of most popular user
-```
+__Having stream of new tweets (based on keywords):__
+- __Track and report most followed tweet author in stream__
+- __Track and report most retweeted tweet of most popular user__
 
 #### Twitter API
 
