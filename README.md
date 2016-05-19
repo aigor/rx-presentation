@@ -65,6 +65,7 @@ class UserWithTweet {
 #### Used libraries
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
+- [Jackson JSON Processor](http://wiki.fasterxml.com/JacksonHome)
 - [Twitter Streaming Client: twitter-hbc](https://github.com/twitter/hbc)
 - [Mockito](http://mockito.org)
 
