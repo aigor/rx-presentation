@@ -2,7 +2,7 @@
 
 This repo is a home for small presentation about RxJava, which is given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
-Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
+#### Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
 ## Short Content of the Presentation
 #### RxJava short history
@@ -64,8 +64,6 @@ class UserWithTweet {
 
 #### Solution diagram
 
-#### Solution diagram for: getUserAndPopularTweet(userName)
-
 #### Getting user profile synchronously
 ```java
 Profile getUserProfile(String screenName) {       
@@ -97,6 +95,95 @@ Observable<Profile> getUserProfile(String screenName) {
    } else {
        return Observable.error(new RuntimeException("Can not connect to twitter"));
    }
+}
+```
+
+#### Solution diagram for: getUserAndPopularTweet(userName)
+
+```java
+Observable<UserWithTweet> getUserAndPopularTweet(String author){
+    return Observable.just(author)
+    .flatMap(u -> {
+        Observable<Profile> profile = client.getUserProfile(u)
+            .subscribeOn(Schedulers.io());
+        Observable<Tweet> tweet = client.getUserRecentTweets(u)
+            .defaultIfEmpty(null)
+            .reduce((t1, t2) ->
+                t1.retweet_count > t2.retweet_count ? t1 : t2)
+            .subscribeOn(Schedulers.io());
+        return Observable.zip(profile, tweet, UserWithTweet::new);
+    });
+}
+```
+
+#### Tweat stream subscription (most popular user)
+```java
+streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+    .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+    .distinctUntilChanged()
+    .map(p -> p.author)
+    .flatMap(name -> getUserAndPopularTweet(name))
+    .subscribeOn(Schedulers.io())
+    .observeOn(Schedulers.immediate())
+    .subscribe(p -> log.info("The most popular tweet of user " 
+                             + p.profile.name + ": " + p.tweet));
+```
+
+Same solution but with extended method: getUserAndPopularTweet(name)
+```java
+streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+    .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+    .distinctUntilChanged()
+    .map(p -> p.author)
+    .flatMap(name -> {
+        Observable<Profile> profile = client.getUserProfile(name)
+            .subscribeOn(Schedulers.io());
+        Observable<Tweet> tweet = client.getUserRecentTweets(name)
+            .defaultIfEmpty(null)
+            .reduce((t1, t2) -> 
+                t1.retweet_count > t2.retweet_count ? t1 : t2)
+            .subscribeOn(Schedulers.io());
+        return Observable.zip(profile, tweet, UserWithTweet::new);
+    })
+    .subscribeOn(Schedulers.io())
+    .observeOn(Schedulers.immediate())
+    .subscribe(p -> log.info("The most popular tweet of user " 
+                             + p.profile.name + ": " + p.tweet));
+```
+
+#### Short conclusions
+
+Pitfals:
+- API is big (150+ methods to remember)
+- Requires to understand underlying magic
+- Hard to debug
+- Don’t forget about back pressure
+
+Strength:
+- It is functional, it is reactive* 
+- Good for integration scenarios
+- Allows to control execution threads
+- Easy to compose workflows
+- Easy to integrate into existing solutions
+- Easy to test
+
+#### Test code example
+```java
+@Test public void correctlyJoinsHttpResults() throws Exception {
+   String testUser = "testUser";
+   Profile profile = new Profile("u1", "Name", "USA", 10, 20, 30);
+   Tweet tweet1    = new Tweet("text-1", 10, 20, testUser, 30);
+   Tweet tweet2    = new Tweet("text-2", 40, 50, testUser, 30);
+
+   TwitterClient client = mock(TwitterClient.class);
+   when(client.getUserProfile(testUser)).thenReturn(Observable.just(profile));
+   when(client.getUserRecentTweets(testUser)).thenReturn(Observable.just(tweet1, tweet2));      
+
+   TestSubscriber<UserWithTweet> testSubscriber = new TestSubscriber<>();
+   new Solutions().getUserAndPopularTweet(client, testUser).subscribe(testSubscriber);
+   testSubscriber.awaitTerminalEvent();
+   assertEquals(singletonList(new UserWithTweet(profile, tweet2)),
+           testSubscriber.getOnNextEvents());
 }
 ```
 
