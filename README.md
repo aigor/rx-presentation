@@ -26,8 +26,20 @@ Twitter REST API:
 - GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf
 - GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf
 
+__Use case - requirements__
+Having stream of new tweets (based on keywords):
+- Track and report most followed tweet author in stream
+- Track and report most retweeted tweet of most popular user
 
-__Used libraries:__
+__Entities used in solution__
+```java class Tweet {
+   String text;
+   int favorite_count;
+   String author;
+   int author_followers;
+}```
+
+__Used libraries__
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
 - [Twitter Streaming Client: twitter-hbc](https://github.com/twitter/hbc)
