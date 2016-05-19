@@ -41,14 +41,6 @@ Recommended tutorials and courses:
 - [Intro To RxJava](https://github.com/Froussios/Intro-To-RxJava)
 - [Coursera: Principles of Reactive Programming](https://www.coursera.org/course/reactive)
 
-Reactive programming for Scala:
-- [RxScala - RxJava binding](http://reactivex.io/rxscala/)
-- [Scientific paper: Ingo Maier Martin Odersky: Deprecating the Observer Pattern with Scala.React](http://infoscience.epfl.ch/record/176887/files/DeprecatingObservers2012.pdf)
-- [Scala.Rx: experimental feature of Scala SDK](https://github.com/lihaoyi/scala.rx)
-
-Reactive programming for other platforms:
-- [.NET F#: Functional Reactive Programming](https://fsharpforfunandprofit.com/posts/concurrency-reactive/)
-
 Recommended videos:
 - [Artur Glier: Learn you some Rx for the greater good](https://www.youtube.com/watch?v=BujWQSjtplc)
 - [Ross Hambrick: RxJava and Retrolambda Making Android | Devnexus 2015](https://www.youtube.com/watch?v=vRl3u1I9v2M)
@@ -67,3 +59,11 @@ Good Presentations:
 - [Reactive Programming with RxJava for Efficient Data Access](http://www.slideshare.net/Couchbase/reactive-programmingrxjavaefficientdata-benchristensenmichaelnitschinger)
 - [Simon Baslé: Practical RxJava](http://www.slideshare.net/SpringCentral/practical-rxjava)
 - [Java 8 Streaming API vs RxJava](http://www.slideshare.net/jpaumard/java-8-stream-api-and-rxjava-comparison)
+
+Reactive programming for Scala:
+- [RxScala - RxJava binding](http://reactivex.io/rxscala/)
+- [Scientific paper: Ingo Maier Martin Odersky: Deprecating the Observer Pattern with Scala.React](http://infoscience.epfl.ch/record/176887/files/DeprecatingObservers2012.pdf)
+- [Scala.Rx: experimental feature of Scala SDK](https://github.com/lihaoyi/scala.rx)
+
+Reactive programming for other platforms:
+- [.NET F#: Functional Reactive Programming](https://fsharpforfunandprofit.com/posts/concurrency-reactive/)
