@@ -62,9 +62,9 @@ class UserWithTweet {
 }
 ```
 
-#### Solution diagram
+#### Complete solution diagram
 
-![Solution diagram](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/RxExample-1.png)
+![Complete solution diagram](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/RxExample-2.png)
 
 #### Getting user profile synchronously
 ```java
@@ -101,6 +101,8 @@ Observable<Profile> getUserProfile(String screenName) {
 ```
 
 #### Solution diagram for: getUserAndPopularTweet(userName)
+
+![getUserAndPopularTweet](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/RxExample-1.png)
 
 ```java
 Observable<UserWithTweet> getUserAndPopularTweet(String author){
