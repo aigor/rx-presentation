@@ -3,9 +3,12 @@ package aigor.rx.twitter;
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
 import aigor.rx.twitter.dto.UserWithTweet;
+import org.junit.Ignore;
 import org.junit.Test;
 import rx.Observable;
+import rx.Subscription;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -60,14 +63,47 @@ public class TwitterClientTest extends BaseTest {
         logTime(tweets.size() + " tweets found: \n - " + tweets.stream().map(Tweet::toString).collect(Collectors.joining("\n - ")), startTime);
     }
 
-    // For stream of tweets track most popular user, his most popular tweet, amount of tweets per minute
+    @Ignore
+    @Test
+    public void solutionUsedInPresentationTest() throws Exception {
+        Subscription subscription = streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+                .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+                .distinctUntilChanged()
+                .map(p -> p.author)
+                .flatMap(name -> {
+                    Observable<Profile> profile = client.getUserProfile(name)
+                            .subscribeOn(Schedulers.io());
+                    Observable<Tweet> tweet = client.getUserRecentTweets(name)
+                            .defaultIfEmpty(null)
+                            .reduce((t1, t2) -> t1.retweet_count > t2.retweet_count ? t1 : t2)
+                            .subscribeOn(Schedulers.io());
+                    return Observable.zip(profile, tweet, UserWithTweet::new);
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(p -> log.info("The most popular tweet of user " + p.profile.name + ": " + p.tweet));
 
-    // TODO: Add error handling, add retry,
+        // Sleep some time in order to give other threads time to work
+        Thread.sleep(60_000);
+        subscription.unsubscribe();
+        Thread.sleep(2_000);
+
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // For stream of tweets track most popular user, his most popular tweet, amount of tweets per 10 seconds
+    // -----------------------------------------------------------------------------------------------------------------
+    @Ignore
     @Test
     public void testStream() throws Exception {
         Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JEEConf", "Java", "Trump");
 
-        tweetStream
+        PublishSubject<Tweet> hostTweetStream = PublishSubject.create();
+        Subscription subscription = tweetStream
+                .subscribeOn(Schedulers.io())
+                .subscribe(hostTweetStream);
+
+        hostTweetStream
                 .window(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .subscribe(window ->
@@ -76,11 +112,13 @@ public class TwitterClientTest extends BaseTest {
                                         .subscribe(n -> log.info("In 10 sec received tweets: " + n))
                 );
 
-        Observable<Tweet> tweetsFromMorePopularUsers = tweetStream
+        Observable<Tweet> tweetsFromMorePopularUsers = hostTweetStream
                 .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
                 .distinctUntilChanged();
 
         tweetsFromMorePopularUsers
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
                 .subscribe(p -> log.info("New the most followed user: " + p.author
                         + " (followed by: " + p.author_followers
                         + ") with tweet: " + p.text)
@@ -94,19 +132,9 @@ public class TwitterClientTest extends BaseTest {
                                 + p.profile.name + ": " + p.tweet)
                 );
 
-
-        tweetsFromMorePopularUsers
-                .map(p -> p.author)
-                .flatMap(name -> {
-                        Observable<Profile> profile = client.getUserProfile(name)
-                                .subscribeOn(Schedulers.io());
-                        Observable<Tweet> tweet = client.getUserRecentTweets(name)
-                                .defaultIfEmpty(null)
-                                .reduce((t1, t2) -> t1.retweet_count > t2.retweet_count ? t1 : t2)
-                                .subscribeOn(Schedulers.io());
-                        return Observable.zip(profile, tweet, UserWithTweet::new);
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe( p -> log.info("The most popular tweet of user " + p.profile.name + ": " + p.tweet));
+        // Sleep some time in order to give other threads time to work
+        Thread.sleep(15_000);
+        subscription.unsubscribe();
+        Thread.sleep(2_000);
     }
 }

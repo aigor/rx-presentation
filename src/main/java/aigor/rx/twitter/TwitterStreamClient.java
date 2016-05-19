@@ -20,15 +20,23 @@ import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Client that allows to listen stream data from Twitter
- * 
- * TODO: Use Observable.using here !
+ *
+ * NOTICE:
+ * It is better to Observable.using for getting stream in order not initialize twitter client before required time
  */
 public class TwitterStreamClient {
+    public static final Logger log = Logger.getLogger(TwitterStreamClient.class.getName());
+
     private final String consumerKey;
     private final String consumerSecret;
     private final String token;
@@ -45,51 +53,68 @@ public class TwitterStreamClient {
     }
 
     public Observable<Tweet> getStream(String... tags){
-        /** Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */
-        BlockingQueue<String> msgQueue = new LinkedBlockingQueue<>(100000);
+        return Observable.<Tweet, Context>using(() -> {
+            long start = currentTimeMillis();
+            BlockingQueue<String> msgQueue = new LinkedBlockingQueue<>(100000);
 
-        Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
-        StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
+            Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
+            StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 
-        hosebirdEndpoint.trackTerms(Lists.newArrayList(tags));
-        Authentication hosebirdAuth = new OAuth1(consumerKey, consumerSecret, token, tokenSecret);
+            hosebirdEndpoint.trackTerms(Lists.newArrayList(tags));
+            Authentication hosebirdAuth = new OAuth1(consumerKey, consumerSecret, token, tokenSecret);
 
-        ClientBuilder builder = new ClientBuilder()
-                .name("Rx-Client-01")
-                .hosts(hosebirdHosts)
-                .authentication(hosebirdAuth)
-                .endpoint(hosebirdEndpoint)
-                .processor(new StringDelimitedProcessor(msgQueue)); // optional: use this if you want to process client events
+            ClientBuilder builder = new ClientBuilder()
+                    .name("Rx-Client-01")
+                    .hosts(hosebirdHosts)
+                    .authentication(hosebirdAuth)
+                    .endpoint(hosebirdEndpoint)
+                    .processor(new StringDelimitedProcessor(msgQueue)); // optional: use this if you want to process client events
 
-        Client hosebirdClient = builder.build();
-        ObjectMapper om = new ObjectMapper();
-
-        Observable.<Tweet>create(s -> {
+            Client hosebirdClient = builder.build();
             hosebirdClient.connect();
-
-            while (!hosebirdClient.isDone() && !s.isUnsubscribed()) {
+            log.info(MessageFormat.format("Twitter Stream for tags {0} initialized, took {1} ms.", Arrays.asList(tags), currentTimeMillis() - start));
+            return new Context(hosebirdClient, msgQueue, new ObjectMapper());
+        },
+        context -> Observable.create(s -> {
+            while (!context.hosebirdClient.isDone() && !s.isUnsubscribed()) {
                 String msg = null;
                 try {
-                    msg = msgQueue.take();
-                    JsonNode jsonNode = om.readTree(msg);
+                    msg = context.msgQueue.take();
+                    JsonNode jsonNode = context.om.readTree(msg);
                     if (!jsonNode.has("limit")) {
-                        Profile user = om.readValue(jsonNode.get("user"), Profile.class);
-                        Tweet tweet = om.readValue(jsonNode, Tweet.class);
+                        Profile user = context.om.readValue(jsonNode.get("user"), Profile.class);
+                        Tweet tweet = context.om.readValue(jsonNode, Tweet.class);
                         tweet.author = user.screen_name;
                         tweet.author_followers = user.followers_count;
                         s.onNext(tweet);
                     } else {
-                        System.out.println("WE HAVE ACHIEVED RATE LIMIT...");
+                        log.warning("WE HAVE ACHIEVED RATE LIMIT...");
                     }
+                } catch (InterruptedException e) {
+                    log.info("Stream was asked to interrupt, using InterruptedException");
+                    s.onCompleted();
                 } catch (Exception e) {
                     s.onError(e);
                 }
             }
             s.onCompleted();
-            hosebirdClient.stop();
-        }).subscribeOn(Schedulers.io())
-                .subscribe(tweetStream);
+        }),
+        context -> {
+            long start = currentTimeMillis();
+            context.hosebirdClient.stop();
+            log.info(MessageFormat.format("Twitter Stream for tags {0} stoped.", Arrays.asList(tags), currentTimeMillis() - start));
+        });
+    }
 
-        return tweetStream;
+    static class Context {
+        Client hosebirdClient;
+        BlockingQueue<String> msgQueue;
+        ObjectMapper om;
+
+        public Context(Client hosebirdClient, BlockingQueue<String> msgQueue, ObjectMapper om) {
+            this.hosebirdClient = hosebirdClient;
+            this.om = om;
+            this.msgQueue = msgQueue;
+        }
     }
 }

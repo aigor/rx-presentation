@@ -13,6 +13,17 @@ public class Tweet {
     public String author;
     public int author_followers;
 
+    public Tweet() {
+    }
+
+    public Tweet(String text, int favorite_count, int retweet_count, String author, int author_followers) {
+        this.text = text;
+        this.favorite_count = favorite_count;
+        this.retweet_count = retweet_count;
+        this.author = author;
+        this.author_followers = author_followers;
+    }
+
     @Override
     public String toString() {
         return "Tweet {" +

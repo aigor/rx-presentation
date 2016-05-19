@@ -10,7 +10,9 @@ import java.util.logging.Logger;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * Base test - setup
+ * ATTENTION:
+ * - THIS TWITTER APP KEYS HAVE READ-ONLY ACCESS AND WOULD BE INVALIDATED AFTER MAY 21, 2016.
+ * - THIS CONNECTIVITY KEYS ARE USED ONLY FOR DEMONSTRATION PURPOSES.
  */
 abstract class BaseTest {
     public static final Logger log = Logger.getLogger(BaseTest.class.getName());

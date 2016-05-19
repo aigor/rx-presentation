@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 /**
  * SearchForFilmsRxDemo - simple example for building pipeline with two thread pools for execution.
  *
- * TODO: Add calculation for and generic info
+ * Show how to use custom thread executors for concurrency management
  */
 public class SearchForFilmsRxDemo {
 

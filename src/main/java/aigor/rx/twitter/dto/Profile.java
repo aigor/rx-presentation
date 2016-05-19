@@ -14,6 +14,17 @@ public class Profile {
     public int friends_count;
     public int followers_count;
 
+    public Profile() {
+    }
+
+    public Profile(String screen_name, String name, String location, int statuses_count, int friends_count, int followers_count) {
+        this.screen_name = screen_name;
+        this.name = name;
+        this.location = location;
+        this.statuses_count = statuses_count;
+        this.friends_count = friends_count;
+        this.followers_count = followers_count;
+    }
 
     @Override
     public String toString() {
