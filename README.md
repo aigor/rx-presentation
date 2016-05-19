@@ -50,8 +50,8 @@ Recommended videos:
 - [Chris Richardson: Futures and Rx Observables: powerful abstractions for consuming web services asynchronously](https://www.youtube.com/watch?v=aZkwIA4k2xU)
 - [Roland Kuhn: Reactive Design Patterns](https://www.youtube.com/watch?v=nSfXcSWq0ug)
 
-Articles:
-- [Schedulers (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
+Recommended articles:
+- [Concurrency in RxJava (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
 
 Good Presentations:
 - [RxJava - introduction & design](http://www.slideshare.net/allegrotech/rxjava-introduction-context)
