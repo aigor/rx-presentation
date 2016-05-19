@@ -7,6 +7,7 @@ Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/nep
 ### Short Content of the Presentation
 
 __RxJava short history__
+
 | Nov 17, 2009	| Rx for .NET v.1.0 (shipped with .NET 4.0)         | 
 | Mar 17, 2010	| Reactive Extensions for JS released               | 
 | Aug 15, 2012	| Rx for .NET v.2.0                                 | 
