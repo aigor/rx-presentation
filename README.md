@@ -7,12 +7,12 @@ Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/nep
 ### Short Content of the Presentation
 
 __RxJava short history__
-- Nov 17, 2009	Rx for .NET v.1.0 (shipped with .NET 4.0)
-- Mar 17, 2010	Reactive Extensions for JS released 
-- Aug 15, 2012	Rx for .NET v.2.0
-- Feb, 2013		Ben Christensen starts library porting to JVM
-- Nov 18, 2014	RxJava v. 1.0.0 
-- May 5, 2016   RxJava v. 1.1.5 (latest at the moment)
+| Nov 17, 2009	| Rx for .NET v.1.0 (shipped with .NET 4.0)         | 
+| Mar 17, 2010	| Reactive Extensions for JS released               | 
+| Aug 15, 2012	| Rx for .NET v.2.0                                 | 
+| Feb, 2013		| Ben Christensen starts library porting to JVM     | 
+| Nov 18, 2014	| RxJava v. 1.0.0                                   | 
+| May 5, 2016   | RxJava v. 1.1.5 (latest at the moment)            | 
 
 __Requirements: Stream of Tweets__
 
