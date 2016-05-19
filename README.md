@@ -5,6 +5,10 @@ This repo is a home for small presentation about RxJava, which is given on [JEEC
 #### [Presentation slides are here, on Slideshare](http://www.slideshare.net/neposuda).
 
 ## Short Content of the Presentation
+
+#### Simplified schema of modern applications
+![modern applications](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/TodayApplication.png)
+
 #### RxJava short history
 
 | Date          | What happended                                    | 
@@ -23,6 +27,8 @@ Having stream of new tweets (based on keywords):
 - Track and report most followed tweet author in stream
 - Track and report most retweeted tweet of most popular user
 ```
+
+![Solution mockUp](https://raw.githubusercontent.com/aigor/rx-presentation/master/slides/diagrams/TwitterBreeze.png)
 
 #### Used Twitter API
 
