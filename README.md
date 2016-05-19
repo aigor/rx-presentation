@@ -62,6 +62,31 @@ class UserWithTweet {
 }
 ```
 
+#### Solution compleate diagram
+
+#### Solution getUserAndPopularTweet(userName)
+
+#### Getting user profile asynchronously
+
+```java
+Observable<Profile> getUserProfile(String screenName) {
+   if (authToken.isPresent()) {
+       return Observable.fromCallable(() -> {
+           ObjectMapper om = new ObjectMapper();
+           return (Profile) om.readValue(om.readTree(
+                   Unirest.get(API_BASE_URL + "users/show.json")
+                           .queryString("screen_name", screenName)
+                           .header("Authorization", bearerAuth(authToken.get()))
+                           .asString()
+                  .getBody()),
+                   Profile.class);
+       }).doOnCompleted(() -> log("getUserProfile completed for: " + screenName));
+   } else {
+       return Observable.error(new RuntimeException("Can not connect to twitter"));
+   }
+}
+```
+
 #### Used libraries
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Unirest](http://unirest.io/java.html)
