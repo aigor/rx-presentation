@@ -1,6 +1,6 @@
 # RxJava Applied: Concise Examples where It Shines
 
-This repo is a home for small presentation about RxJava, that should be given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
+This repo is a home for small presentation about RxJava, which is given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
 Slides for presentation are hosted on [Slideshare](http://www.slideshare.net/neposuda).
 
