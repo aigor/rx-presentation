@@ -5,4 +5,3 @@ deploy:
   provider: heroku
   app: tweet-breazee
   api_key: $HEROKU_KEY
-    secure: 
