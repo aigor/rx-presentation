@@ -1,6 +1,6 @@
 # RxJava Applied: Concise Examples where It Shines
 
-![Repo build status](https://travis-ci.org/aigor/rx-presentation.svg?branch=master)
+<a href='https://travis-ci.org/aigor/rx-presentation/builds'><img src='https://travis-ci.org/aigor/rx-presentation.svg?branch=master'></a>
 
 This repo is a home for small presentation about RxJava, which was given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
