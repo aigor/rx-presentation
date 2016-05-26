@@ -2,7 +2,7 @@
 
 ![Repo build status](https://travis-ci.org/aigor/rx-presentation.svg?branch=master)
 
-This repo is a home for small presentation about RxJava, which is given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
+This repo is a home for small presentation about RxJava, which was given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
 #### [Presentation slides are here, on Slideshare](http://www.slideshare.net/neposuda/rxjava-applied).
 
