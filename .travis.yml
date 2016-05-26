@@ -1,3 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+deploy:
+  provider: heroku
+  app: tweet-breazee
+  api_key: $HEROKU_KEY
+    secure: 
