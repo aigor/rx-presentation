@@ -218,6 +218,7 @@ Recommended tutorials and courses:
 - [Coursera: Principles of Reactive Programming](https://www.coursera.org/course/reactive)
 
 Recommended videos:
+- [José Paumard: Java 8 Stream and RxJava comparison: patterns and performances](https://youtu.be/fabN6HNZ2qY)
 - [Artur Glier: Learn you some Rx for the greater good](https://www.youtube.com/watch?v=BujWQSjtplc)
 - [Ross Hambrick: RxJava and Retrolambda Making Android | Devnexus 2015](https://www.youtube.com/watch?v=vRl3u1I9v2M)
 - [Li Haoyi: Fun Functional-Reactive Programming with Scala.Rx](https://www.youtube.com/watch?v=i9mPUU1gu_8)
