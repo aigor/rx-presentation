@@ -137,4 +137,62 @@ public class TwitterClientTest extends BaseTest {
         subscription.unsubscribe();
         Thread.sleep(2_000);
     }
+
+    @Ignore
+    @Test
+    public void testStreamInParallel() throws Exception {
+        String[] words = {"RxJava", "JEEConf", "Java", "Obama", "Putin", "Russia", "USA", "Canada"};
+
+        for (int threadId = 0; threadId < words.length; threadId++) {
+            final String word = words[threadId];
+            new Thread(() -> {
+                Observable<Tweet> tweetStream = streamClient.getStream(word);
+
+                PublishSubject<Tweet> hostTweetStream = PublishSubject.create();
+                Subscription subscription = tweetStream
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(hostTweetStream);
+
+                hostTweetStream
+                        .window(10, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(window ->
+                                window.count()
+                                        .subscribeOn(Schedulers.io())
+                                        .subscribe(n -> log.info("["+ word +"] In 10 sec received tweets: " + n))
+                        );
+
+                Observable<Tweet> tweetsFromMorePopularUsers = hostTweetStream
+                        .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+                        .distinctUntilChanged();
+
+                tweetsFromMorePopularUsers
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.newThread())
+                        .subscribe(p -> log.info("["+ word +"] New the most followed user: " + p.author
+                                + " (followed by: " + p.author_followers
+                                + ") with tweet: " + p.text)
+                        );
+
+                tweetsFromMorePopularUsers
+                        .flatMap(t -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(client, t.author))
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(p ->
+                                log.info("["+ word +"] The most popular tweet of user "
+                                        + p.profile.name + ": " + p.tweet)
+                        );
+                try {
+                    // Sleep some time in order to give other threads time to work
+                    Thread.sleep(15_000);
+                    subscription.unsubscribe();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }).start();
+        }
+
+        Thread.sleep(20_000);
+    }
+
 }

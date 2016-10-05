@@ -15,9 +15,9 @@
 
 ## Plan that this presentation follows (timing: 50 minutes)
 - __Introduction (3 min)__
- 	- Presentation name and info about the speaker: speaker name, company, background & talk topic (1 min sec)
+    - Presentation name and info about the speaker: speaker name, company, background & talk topic (1 min sec)
 	- QR code for presentation slides & code (1 min)
-  - Notice: Question session will be at the end, let's start!
+    - Notice: Question session will be at the end, let's start!
 - __Theoretical part (15 minutes)__
 	- Java 8 stream essentials revision (what it is and what it for) (2 min)
 	- Reactive Streams: what the difference (2 min)
@@ -27,7 +27,7 @@
 	- Basic performance comparison (based on José Paumard's benchmarks + my own benchmarks) (2 min)
 	- What scenarios RxJava good for (Android, Integration, API, async bridging) (1 min)
 	- RxJava is not new concept, don't afraid it (very similar to: Cool Callbacks, Apache Camel, Completable Futures, Streams) (1 min)
-  - Current alternatives: Vert.x, Ratpack, etc (1 min)
+    - Current alternatives: Vert.x, Ratpack, etc (1 min)
 - __Practical part (15 minutes) [TODO: annotate this part based on JEEConf video]__
 	- Let's solve some problem (formulate problem: twitter stream analysis) (2 min)
 	- Propose solution strategy (high level & low level) (1 min 30 sec)
@@ -56,7 +56,7 @@
 	- Java Promises & JDefered (TODO: Look into library)
 	- Actor model & Akka (Erlang, GPars, etc.)
 	- Scala FRP implementation: scala.rx
-	- And some other options
+	- Reactive Streams alternatives
 - I do not want to compare RxJava with other libraries, it would be too hard (each library has its own "best fit" scenarios)
 - I want to show strong sides of RxJava, how lightweight it is, and how easy to start using it
 
