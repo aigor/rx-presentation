@@ -1,0 +1,16 @@
+# Run complete. Total time: 00:14:10
+
+Benchmark                                                                       Mode  Cnt    Score   Error  Units
+o.p.j.gscollection.ShakespearePlaysScrabbleWithGSCollections.measureThroughput  avgt  100   34.852 ± 1.364  ms/op
+o.p.j.rxjava.ShakespearePlaysScrabbleWithRxJava.measureThroughput               avgt  100  310.378 ± 9.688  ms/op
+o.p.j.stream.ShakespearePlaysScrabbleWithNonParallelStreams.measureThroughput   avgt  100   44.995 ± 1.718  ms/op
+o.p.j.stream.ShakespearePlaysScrabbleWithParallelStreams.measureThroughput      avgt  100   14.095 ± 0.616  ms/op
+
+
+To Slides:
+
+
+Shakespeare Plays Scrabble Benchmark (throughput)
+Non-Parallel Streams       44.995 ± 1.718  ms/op
+Parallel Streams           14.095 ± 0.616  ms/op
+RxJava                    310.378 ± 9.688  ms/op
