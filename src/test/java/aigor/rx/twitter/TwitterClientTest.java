@@ -96,7 +96,7 @@ public class TwitterClientTest extends BaseTest {
     @Ignore
     @Test
     public void testStream() throws Exception {
-        Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JEEConf", "Java", "Trump");
+        Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JEEConf", "Java", "PHP");
 
         PublishSubject<Tweet> hostTweetStream = PublishSubject.create();
         Subscription subscription = tweetStream
