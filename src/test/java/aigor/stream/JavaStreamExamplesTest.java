@@ -13,16 +13,14 @@ import java.util.stream.StreamSupport;
 import static java.util.function.IntUnaryOperator.identity;
 
 /**
+ * Class that holds code snippets used in presentation slides
  * Created by aigor on 07.10.16.
  */
 public class JavaStreamExamplesTest {
-    @Test public void simpleStream(){
-        Stream<String> stream = Stream.of("first", "second", "third", "4");
-        stream.filter(s -> s.length() < 6)
-              .map(String::toUpperCase)
-              .forEach(System.out::println);
 
-    }
+    // -----------------------------------------------------------------------------------------------------------------
+    // Static Employee class to represent processing with Streams
+    // -----------------------------------------------------------------------------------------------------------------
 
     static class Employee {
         private int age;
@@ -36,21 +34,19 @@ public class JavaStreamExamplesTest {
         }
     }
 
-    @Test public void streamCollectors(){
-        List<Employee> employees = Arrays.asList(new Employee(23), new Employee(34), new Employee(34), new Employee(45), new Employee(19));
-
-        Map<Integer, Long> ageDistribution =
-        employees.stream()
-                .filter(e -> e.getAge() > 25)
-                .collect(Collectors.groupingBy(
-                        Employee::getAge,
-                        Collectors.counting()
-                ));
-        System.out.println(ageDistribution);
+    private List<Employee> getEmployees() {
+        return Arrays.asList(new Employee(23), new Employee(34), new Employee(34), new Employee(45), new Employee(19));
     }
 
-    @Test public void streamCollectorsOld(){
-        List<Employee> employees = Arrays.asList(new Employee(23), new Employee(34), new Employee(34), new Employee(45), new Employee(19));
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Old school data processing vs Stream API for data processing
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void preJava8DataProcessing(){
+        // Data creation duplicated in order to be easily copied to slides
+        List<Employee> employees = getEmployees();
 
         Map<Integer, List<Employee>> ageDistribution = new HashMap<>();
         for (Employee employee : employees) {
@@ -69,8 +65,8 @@ public class JavaStreamExamplesTest {
 
     }
 
-    @Test public void streamCollectorsNew(){
-        List<Employee> employees = Arrays.asList(new Employee(23), new Employee(34), new Employee(34), new Employee(45), new Employee(19));
+    @Test public void streamCollectors(){
+        List<Employee> employees = getEmployees();
 
         Map<Integer, List<Employee>> ageDistribution =
                 employees.stream()
@@ -79,14 +75,105 @@ public class JavaStreamExamplesTest {
         System.out.println(ageDistribution);
     }
 
+    @Test
+    public void streamCollectorsAlternative(){
+        List<Employee> employees = getEmployees();
 
-
-    @Test public void streamSources(){
-        Stream<String> stream1 = Arrays.asList("A", "B", "C").stream();
-        Stream<String> stream2 = Stream.of("Q", "P", "R");
-        IntStream chars = "some text".chars();
-        Stream<String> words = Pattern.compile(" ").splitAsStream("some other text");
+        Map<Integer, Long> ageDistribution =
+        employees.stream()
+                .filter(e -> e.getAge() > 25)
+                .collect(Collectors.groupingBy(
+                        Employee::getAge,
+                        Collectors.counting()
+                ));
+        System.out.println(ageDistribution);
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Stream operators
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void simpleStreamOperators(){
+        Stream.of("first", "second", "third", "4")
+                .filter(s -> s.length() < 6)
+                .map(String::toUpperCase)
+                .forEach(System.out::println);
+
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sequence generation - different ways
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Test public void simpleStreamSources(){
+        Stream<String> stream1  = Arrays.asList("A", "B", "C").stream();
+        Stream<String> stream2  = Stream.of("Q", "P", "R");
+        IntStream chars         = "some text".chars();
+        Stream<String> words    = Pattern.compile(" ").splitAsStream("some other text");
+    }
+
+    @Test public void generateAsStreamSources(){
+        Stream.generate(() -> UUID.randomUUID().toString())
+                .limit(10)
+                .forEach(System.out::println);
+    }
+
+    static class RandomSpliterator implements Spliterator<String> {
+        public boolean tryAdvance(Consumer<? super String> action) {
+            action.accept(UUID.randomUUID().toString());
+            return true;
+        }
+
+        public Spliterator<String> trySplit() {
+            return null;
+        }
+
+        public long estimateSize() {
+            return Long.MAX_VALUE;
+        };
+
+        public int characteristics() {
+            return NONNULL | DISTINCT;
+        }
+    }
+
+
+    @Test public void simpleSpliteratorExample(){
+        Stream<String> stream = StreamSupport.stream(new RandomSpliterator(), false);
+        stream.limit(2).forEach(System.out::println);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sequences to generate: 1, 2, 2, 3, 3, 3, 4, 4, 4, 4 ...
+    // -----------------------------------------------------------------------------------------------------------------
+
+    private List<Integer> generateSequenceOldStyle(int maxValue){
+        List<Integer> data = new ArrayList<>();
+        for (int i = 1; i<= maxValue; i++){
+            for (int j = 1; j <= i ; j++){
+                data.add(i);
+            }
+        }
+        return data;
+    }
+
+    @Test public void oneTwoThreeSequenceOldStyle(){
+        generateSequenceOldStyle(4).stream().forEach(System.out::println);
+    }
+
+    @Test public void oneTwoThreeSequenceNewStyle(){
+        IntStream sequence =
+                IntStream.rangeClosed(1, 50)
+                        .flatMap(i ->
+                                IntStream.iterate(i, identity()).limit(i)
+                        );
+        sequence.forEach(System.out::println);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Advanced spliterator - double every incoming stream item
+    // -----------------------------------------------------------------------------------------------------------------
 
     interface ValueWrapper<T> {
         T get();
@@ -134,62 +221,9 @@ public class JavaStreamExamplesTest {
         }
     }
 
-
     @Test public void spliteratorExample(){
-        Spliterator<String> spliterator = Stream.generate(() -> UUID.randomUUID().toString()).limit(1).spliterator();
+        Spliterator<String> spliterator = Stream.generate(() -> UUID.randomUUID().toString()).limit(3).spliterator();
         Stream<String> stream = StreamSupport.stream(new DoublerSpliterator<>(spliterator), false);
-        stream.limit(3).forEach(System.out::println);
+        stream.limit(7).forEach(System.out::println);
     }
-
-
-    static class RandomSpliterator implements Spliterator<String> {
-        public boolean tryAdvance(Consumer<? super String> action) {
-            action.accept(UUID.randomUUID().toString());
-            return true;
-        }
-
-        public Spliterator<String> trySplit() {
-            return null;
-        }
-
-        public long estimateSize() {
-            return Long.MAX_VALUE;
-        };
-
-        public int characteristics() {
-            return NONNULL | DISTINCT;
-        }
-    }
-
-
-    @Test public void simpleSpliteratorExample(){
-        Stream<String> stream = StreamSupport.stream(new RandomSpliterator(), false);
-        stream.limit(2).forEach(System.out::println);
-    }
-
-    @Test public void oneTwoThreesequence(){
-        IntStream sequence =
-            IntStream.rangeClosed(1, 50)
-                .flatMap(i ->
-                        IntStream.iterate(i, identity()).limit(i)
-                );
-        sequence.forEach(System.out::println);
-    }
-
-    List<Integer> generateSequence(int maxValue){
-        List<Integer> data = new ArrayList<>();
-        for (int i = 1; i<= maxValue; i++){
-            for (int j = 1; j <= i ; j++){
-                data.add(i);
-            }
-        }
-        return data;
-    }
-
-    @Test public void oneTwoThreeSequenceOldStyle(){
-        generateSequence(4).stream().forEach(System.out::println);
-    }
-
-
-
 }
