@@ -13,14 +13,14 @@ This repo is a home for small presentation about RxJava, which was given on [JEE
 
 #### RxJava short history
 
-| Date          | What happended                                    | 
+| Date          | What happended                                    |
 | ------------- | ------------------------------------------------- |
-| Nov 17, 2009	| Rx for .NET v.1.0 (shipped with .NET 4.0)         | 
-| Mar 17, 2010	| Reactive Extensions for JS released               | 
-| Aug 15, 2012	| Rx for .NET v.2.0                                 | 
-| Feb, 2013		| Ben Christensen starts library porting to JVM     | 
-| Nov 18, 2014	| RxJava v. 1.0.0                                   | 
-| May 5, 2016   | RxJava v. 1.1.5 (latest at the moment)            | 
+| Nov 17, 2009	| Rx for .NET v.1.0 (shipped with .NET 4.0)         |
+| Mar 17, 2010	| Reactive Extensions for JS released               |
+| Aug 15, 2012	| Rx for .NET v.2.0                                 |
+| Feb, 2013		| Ben Christensen starts library porting to JVM     |
+| Nov 18, 2014	| RxJava v. 1.0.0                                   |
+| May 5, 2016   | RxJava v. 1.1.5 (latest at the moment)            |
 
 #### Requirements: Stream of Tweets
 
@@ -137,7 +137,7 @@ streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
     .flatMap(name -> getUserAndPopularTweet(name))
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.immediate())
-    .subscribe(p -> log.info("The most popular tweet of user " 
+    .subscribe(p -> log.info("The most popular tweet of user "
                              + p.profile.name + ": " + p.tweet));
 ```
 
@@ -152,14 +152,14 @@ streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
             .subscribeOn(Schedulers.io());
         Observable<Tweet> tweet = client.getUserRecentTweets(name)
             .defaultIfEmpty(null)
-            .reduce((t1, t2) -> 
+            .reduce((t1, t2) ->
                 t1.retweet_count > t2.retweet_count ? t1 : t2)
             .subscribeOn(Schedulers.io());
         return Observable.zip(profile, tweet, UserWithTweet::new);
     })
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.immediate())
-    .subscribe(p -> log.info("The most popular tweet of user " 
+    .subscribe(p -> log.info("The most popular tweet of user "
                              + p.profile.name + ": " + p.tweet));
 ```
 
@@ -172,7 +172,7 @@ Pitfalls:
 - Don’t forget about back pressure
 
 Strength:
-- It is functional, it is reactive* 
+- It is functional, it is reactive*
 - Good for integration scenarios
 - Allows to control execution threads
 - Easy to compose workflows
@@ -226,6 +226,7 @@ Recommended videos:
 - [Erik Meijer: A Playful Introduction to Rx](https://www.youtube.com/watch?v=WKore-AkisY)
 - [Chris Richardson: Futures and Rx Observables: powerful abstractions for consuming web services asynchronously](https://www.youtube.com/watch?v=aZkwIA4k2xU)
 - [Roland Kuhn: Reactive Design Patterns](https://www.youtube.com/watch?v=nSfXcSWq0ug)
+- [Dan Lew: Common RxJava Mistakes](https://www.youtube.com/watch?v=QdmkXL7XikQ)
 
 Recommended articles:
 - [Concurrency in RxJava (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
