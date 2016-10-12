@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/aigor/rx-presentation.svg?branch=master)](https://travis-ci.org/aigor/rx-presentation)
 
-This repo is a home for small presentation about RxJava, which was given on [JEEConf 2016](http://jeeconf.com). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
+This repo is a home for small presentation about RxJava, which was given on [JEEConf 2016](http://jeeconf.com) and [JavaDay Kyiv 2016](http://javaday.org.ua/kyiv/). It contains slides, presented code samples, and some useful links. Presentation description is [here](http://jeeconf.com/program/rxjava-applied-consise-examples-where-it-shines/).
 
 #### [Presentation slides are here, on Slideshare](http://www.slideshare.net/neposuda/rxjava-applied).
 
@@ -166,7 +166,7 @@ streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
 #### Short conclusions
 
 Pitfalls:
-- API is big (150+ methods to remember)
+- API is big (150+ methods to remember)Enhancing Java 8 Streams
 - Requires to understand underlying magic
 - Hard to debug
 - Don’t forget about back pressure
