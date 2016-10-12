@@ -64,11 +64,23 @@
 - Performance comparison - reuse Paul's comparison
 - Ability to integrate with Java NIO, Netty, Retpack, asynchronous servlets (TODO: Add code samples)
 
+## Omitting RxJava related mistakes
+- Do not use Observable.create(), you will miss unsubscribe && backpressure
+- Better options to create: fromCallable, deferf, just
+- Cache vs replay -> use replay, it is better, has autoConnect that is cache alike
+- Operators are hard to write, do not do if you have no hard reason
+- SubscribeOn - wins first, ObserveOn - every matters
+- Do not reuse Subbscription (class), it is statefull
+- Use CompositeSubscription in order to unsubscribe for lots of streams (add(), unsubscribe(), clear())
+- Do not use onError for flow control (use errors as events, or wrappers)
+- Always add onError to handle unexpected errors (IO, etc)
+- Use publish() to make cold observable hot, publish -> connectable -> connect (autoConnect)
+
 ## TODO for presentation
+- OmniGraph - marble diagram library, find it
 - Find callback based library options for Java (I saw some for Android)
 - Look into JDeferred
 - Look at Apache Camel current status
-- Review RxJava strength & pitfalls with community (it shouldn't by only my opinion)
 - Try to solve mentioned problems using other approaches and libraries (at least Camel, Akka, GPars, Scala, JDeferred, CompletableFuture)
 - Add some performance testing suite for a rough comparison (May use Paul's)
 - Investigate in details ability to integrate with Java NIO, Netty, asynchronous servlets (possible Q&A)

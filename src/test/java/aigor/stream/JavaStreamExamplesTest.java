@@ -1,8 +1,11 @@
 package aigor.stream;
 
 import org.junit.Test;
+import rx.schedulers.Schedulers;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -13,7 +16,7 @@ import java.util.stream.StreamSupport;
 import static java.util.function.IntUnaryOperator.identity;
 
 /**
- * Class that holds code snippets used in presentation slides
+ * Class that holds code snippets used in presentation slides (Java 8 Stream API)
  * Created by aigor on 07.10.16.
  */
 public class JavaStreamExamplesTest {
@@ -43,8 +46,7 @@ public class JavaStreamExamplesTest {
     // Old school data processing vs Stream API for data processing
     // -----------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void preJava8DataProcessing(){
+    @Test public void preJava8DataProcessing(){
         // Data creation duplicated in order to be easily copied to slides
         List<Employee> employees = getEmployees();
 
@@ -75,8 +77,7 @@ public class JavaStreamExamplesTest {
         System.out.println(ageDistribution);
     }
 
-    @Test
-    public void streamCollectorsAlternative(){
+    @Test public void streamCollectorsAlternative(){
         List<Employee> employees = getEmployees();
 
         Map<Integer, Long> ageDistribution =
@@ -93,8 +94,7 @@ public class JavaStreamExamplesTest {
     // Stream operators
     // -----------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void simpleStreamOperators(){
+    @Test public void simpleStreamOperators(){
         Stream.of("first", "second", "third", "4")
                 .filter(s -> s.length() < 6)
                 .map(String::toUpperCase)
@@ -225,5 +225,77 @@ public class JavaStreamExamplesTest {
         Spliterator<String> spliterator = Stream.generate(() -> UUID.randomUUID().toString()).limit(3).spliterator();
         Stream<String> stream = StreamSupport.stream(new DoublerSpliterator<>(spliterator), false);
         stream.limit(7).forEach(System.out::println);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Async computation with Stream API (simple, parallel, custom ForkJoinPool) & RxJava
+    // -----------------------------------------------------------------------------------------------------------------
+    private List<String> generateRequestData() {
+        return Stream.generate(() -> UUID.randomUUID().toString())
+                .limit(50)
+                .collect(Collectors.toList());
+    }
+
+    private String doRequest(String request){
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("[" + Thread.currentThread().getName() + "] processing request: " + request);
+        return "response: " + request;
+    }
+
+    private void stopwatch(Runnable action){
+        long start = System.currentTimeMillis();
+        action.run();
+        System.out.println("Execution took: " + (System.currentTimeMillis() - start) + " ms.");
+    }
+
+    @Test public void asyncComputationWithStreamAPI(){
+        stopwatch(() ->
+            generateRequestData().stream()
+                    .map(req -> doRequest(req))
+                    .collect(Collectors.toList())
+        );
+    }
+
+    @Test public void asyncComputationWithParallelStreamAPI(){
+        stopwatch(() ->
+            generateRequestData().stream()
+                .parallel()
+                .map(req -> doRequest(req))
+                .collect(Collectors.toList())
+        );
+    }
+
+    @Test public void asyncComputationWithForkJoinPool(){
+        ForkJoinPool forkJoinPool = new ForkJoinPool(50);
+        stopwatch(() -> {
+                    try {
+                        forkJoinPool.submit(() ->
+                                generateRequestData().stream()
+                                        .parallel()
+                                        .map(req -> doRequest(req))
+                                        .collect(Collectors.toList())
+                        ).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+    }
+
+    @Test public void asyncComputationWithRxJava(){
+        stopwatch(() ->
+            rx.Observable.from(generateRequestData())
+                .flatMap(req ->
+                        rx.Observable.just(req)
+                        .subscribeOn(Schedulers.io())
+                        .map(actualReq -> doRequest(actualReq)))
+                .toList()
+                .toBlocking()
+                .first()
+        );
     }
 }
