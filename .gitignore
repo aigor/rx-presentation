@@ -1,4 +1,9 @@
-*.iml
+build
 .gradle
 .idea
-build
+out
+*.iml
+*.ipr
+*.iws
+.env
+.DS_Store
