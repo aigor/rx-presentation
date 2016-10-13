@@ -8,14 +8,14 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,7 +32,7 @@ import static java.lang.System.currentTimeMillis;
  * OAuth 2 Twitter protocol: https://dev.twitter.com/oauth/application-only
  */
 public class TwitterClient {
-    private static final Logger log = Logger.getLogger(TwitterClient.class.getSimpleName());
+    private static final Logger log = LoggerFactory.getLogger(TwitterClient.class.getSimpleName());
 
     static String API_BASE_URL          = "https://api.twitter.com/1.1/";
     static String OAUTH_API_BASE_URL    = "https://api.twitter.com/oauth2/";
@@ -158,7 +158,7 @@ public class TwitterClient {
                 return Optional.of(authorization.getBody().getObject().get("access_token").toString());
             }
         } catch (UnirestException e) {
-            log.log(Level.WARNING, "Error while auth: " + e.getMessage(), e);
+            log.warn("Error while auth: " + e.getMessage(), e);
         }
         return Optional.empty();
     }
@@ -167,7 +167,7 @@ public class TwitterClient {
         log.info(String.format("[%4s ms] %s", (currentTimeMillis() - startTime), message));
     }
     public static void debugTime(String message, long startTime) {
-        log.fine(String.format("[%4s ms] %s", (currentTimeMillis() - startTime), message));
+        log.debug(String.format("[%4s ms] %s", (currentTimeMillis() - startTime), message));
     }
 
 }

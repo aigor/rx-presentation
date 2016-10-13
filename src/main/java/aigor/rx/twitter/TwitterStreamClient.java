@@ -2,7 +2,6 @@ package aigor.rx.twitter;
 
 import aigor.rx.twitter.dto.Profile;
 import aigor.rx.twitter.dto.Tweet;
-import aigor.rx.twitter.dto.UserWithTweet;
 import com.google.common.collect.Lists;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
@@ -15,16 +14,15 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Logger;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -35,7 +33,7 @@ import static java.lang.System.currentTimeMillis;
  * It is better to Observable.using for getting stream in order not initialize twitter client before required time
  */
 public class TwitterStreamClient {
-    public static final Logger log = Logger.getLogger(TwitterStreamClient.class.getName());
+    public static final Logger log = LoggerFactory.getLogger(TwitterStreamClient.class.getName());
 
     private final String consumerKey;
     private final String consumerSecret;
@@ -88,7 +86,7 @@ public class TwitterStreamClient {
                         tweet.author_followers = user.followers_count;
                         s.onNext(tweet);
                     } else {
-                        log.warning("WE HAVE ACHIEVED RATE LIMIT...");
+                        log.warn("WE HAVE ACHIEVED RATE LIMIT...");
                     }
                 } catch (InterruptedException e) {
                     log.info("Stream was asked to interrupt, using InterruptedException");

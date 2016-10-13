@@ -1,5 +1,6 @@
 package aigor.rx.example;
 
+import org.junit.Test;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -7,16 +8,17 @@ import rx.schedulers.Schedulers;
 import java.util.concurrent.*;
 
 /**
- * SearchForFilmsRxDemo - simple example for building pipeline with two thread pools for execution.
+ * simple example for building pipeline with two thread pools for execution.
  *
  * Show how to use custom thread executors for concurrency management
  */
-public class SearchForFilmsRxDemo {
+public class SearchForFilmsRxTest {
 
-    private static ExecutorService rxExecutor = Executors.newWorkStealingPool(100);
-    private static ExecutorService requestExecutor = Executors.newFixedThreadPool(50);
+    private ExecutorService rxExecutor = Executors.newWorkStealingPool(100);
+    private ExecutorService requestExecutor = Executors.newFixedThreadPool(50);
 
-    public static void main(String[] args) throws InterruptedException {
+    @Test
+    public void searchForFilms() throws InterruptedException {
         final long startTime = System.currentTimeMillis();
         final int tasks = 50;
         CountDownLatch latch = new CountDownLatch(tasks);
@@ -51,19 +53,19 @@ public class SearchForFilmsRxDemo {
         requestExecutor.shutdown();
     }
 
-    private static Observable<Tile> getSearchResults(String string) {
+    private Observable<Tile> getSearchResults(String string) {
         return mockClient(new Tile(1), new Tile(2), new Tile(3));
     }
 
-    private static Observable<Reviews> getSellerReviews(int id) {
+    private Observable<Reviews> getSellerReviews(int id) {
         return mockClient(new Reviews());
     }
 
-    private static Observable<String> getProductImage(int id) {
+    private Observable<String> getProductImage(int id) {
         return mockClient("image_" + id);
     }
 
-    private static <T> Observable<T> mockClient(T... ts) {
+    private <T> Observable<T> mockClient(T... ts) {
         return Observable.create((Subscriber<? super T> s) -> {
             // simulate latency
             try {
@@ -79,7 +81,7 @@ public class SearchForFilmsRxDemo {
     }
 
     // --- Supporting methods ------------------------------------------------------------------------------------------
-    private static void logTime(String message, long startTime) {
+    private void logTime(String message, long startTime) {
         System.out.println(String.format("[%4s ms] [T:%3s] %s",
                 (System.currentTimeMillis() - startTime), Thread.currentThread().getId(), message));
     }

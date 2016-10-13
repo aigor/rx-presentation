@@ -7,6 +7,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tweet {
+    public final String type = "tweet";
+
     public String text;
     public int favorite_count;
     public int retweet_count;

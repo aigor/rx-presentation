@@ -4,6 +4,8 @@ package aigor.rx.twitter.dto;
  * DTO to represent user and tweet
  */
 public class UserWithTweet {
+    public final String type = "userWithTweet";
+
     public Profile profile;
     public Tweet tweet;
 

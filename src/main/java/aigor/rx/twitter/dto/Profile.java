@@ -7,6 +7,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Profile {
+    public final String type = "profile";
+
     public String screen_name;
     public String name;
     public String location;
