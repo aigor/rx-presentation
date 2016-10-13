@@ -1,0 +1,5 @@
+{
+  "name": "TwitterBuzz",
+  "description": "Interesting tweets stream processor",
+  "image": "heroku/gradle"
+}

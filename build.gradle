@@ -15,17 +15,20 @@ repositories {
 }
 
 dependencies {
-    compile         'io.reactivex:rxjava:1.1.2'
+    compile         'io.reactivex:rxjava:1.1.8'
+    compile         'io.reactivex:rxjava-reactive-streams:1.1.1'
     compile         'com.mashape.unirest:unirest-java:1.4.9'
     compile         'org.codehaus.jackson:jackson-core-asl:1.9.13'
     compile         'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     compile         'com.twitter:hbc-core:2.2.0'
 
+    runtime         "org.slf4j:slf4j-simple:1.7.12"
+
     testCompile     'junit:junit:4.+'
     testCompile     'org.mockito:mockito-all:1.10.19'
 }
 
-mainClassName = "aigor.rx.example.SearchForFilmsRxDemo"
+mainClassName = "aigor.rx.RatpackApplication"
 
 task stage {
   dependsOn installDist

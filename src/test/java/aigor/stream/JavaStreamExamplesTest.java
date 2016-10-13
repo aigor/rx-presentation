@@ -270,7 +270,7 @@ public class JavaStreamExamplesTest {
     }
 
     @Test public void asyncComputationWithForkJoinPool(){
-        ForkJoinPool forkJoinPool = new ForkJoinPool(50);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(80);
         stopwatch(() -> {
                     try {
                         forkJoinPool.submit(() ->

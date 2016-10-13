@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% render "header.html" %>
+</head>
+
+<body>
+  <% render "nav.html" %>
+
+<div class="container">
+
+  <h1>Database Output</h1>
+    <ul>
+    <% model.get("results").each { result -> %>
+       <li> ${result} </li>
+    <% } %>
+    </ul>
+
+</div>
+
+</body>
+</html>
