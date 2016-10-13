@@ -20,7 +20,7 @@ This repo is a home for small presentation about RxJava, which was given on [JEE
 | Aug 15, 2012	| Rx for .NET v.2.0                                 |
 | Feb, 2013		| Ben Christensen starts library porting to JVM     |
 | Nov 18, 2014	| RxJava v. 1.0.0                                   |
-| May 5, 2016   | RxJava v. 1.1.5 (latest at the moment)            |
+| Oct 5, 2016   | RxJava v. 1.2.1 (latest at the moment)            |
 
 #### Requirements: Stream of Tweets
 
