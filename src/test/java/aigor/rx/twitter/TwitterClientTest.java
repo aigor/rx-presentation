@@ -66,7 +66,7 @@ public class TwitterClientTest extends BaseTest {
     @Ignore
     @Test
     public void solutionUsedInPresentationTest() throws Exception {
-        Subscription subscription = streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+        Subscription subscription = streamClient.getStream("RxJava", "JavaDay", "Java", "Trump")
                 .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
                 .distinctUntilChanged()
                 .map(p -> p.author)
@@ -96,7 +96,7 @@ public class TwitterClientTest extends BaseTest {
     @Ignore
     @Test
     public void testStream() throws Exception {
-        Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JEEConf", "Java", "PHP");
+        Observable<Tweet> tweetStream = streamClient.getStream("RxJava", "JavaDay", "Java", "PHP");
 
         PublishSubject<Tweet> hostTweetStream = PublishSubject.create();
         Subscription subscription = tweetStream

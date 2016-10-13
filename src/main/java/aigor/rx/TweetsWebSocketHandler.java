@@ -1,6 +1,8 @@
 package aigor.rx;
 
 import aigor.rx.dto.KeyWordsRequest;
+import aigor.rx.dto.TweetStatisticsEvent;
+import aigor.rx.twitter.ProblemSolutions;
 import aigor.rx.twitter.TwitterClient;
 import aigor.rx.twitter.TwitterStreamClient;
 import aigor.rx.twitter.dto.Tweet;
@@ -23,6 +25,7 @@ import rx.RxReactiveStreams;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+import rx.subscriptions.CompositeSubscription;
 
 import java.nio.CharBuffer;
 import java.util.Optional;
@@ -45,6 +48,8 @@ class TweetsWebSocketHandler implements WebSocketHandler<String> {
     private MessageMapper messageMapper;
     private TwitterClientFactory twitterClientFactory;
 
+    private PublishSubject<Tweet> hostTweetStream;
+    private Subscription tweetStreamSubscription;
     private TwitterClient twitterClient;
     private TwitterStreamClient twitterStreamClient;
     private long startTime;
@@ -84,20 +89,57 @@ class TweetsWebSocketHandler implements WebSocketHandler<String> {
         keyWordsRequest.ifPresent(request -> {
             cancelSubscriptionIfRequired();
 
-            Observable<String> mappedTweetStream = twitterStreamClient
+            // TODO: Cancel on unsubscribe
+            PublishSubject<Tweet> hostTweetStream = PublishSubject.create();
+            tweetStreamSubscription = twitterStreamClient
                     .getStream(getKeyWords(request))
                     .subscribeOn(Schedulers.io())
+                    .doOnUnsubscribe(() -> {
+                        log.info("Stream for [" + request.q + "] finished due to subscription cancellation");
+                    })
+                    .subscribe(hostTweetStream);
+
+            Observable<String> mappedTweetStream =
+                    hostTweetStream
                     .map(t -> {
                         log.info("Processing tweet [" + t + "]");
                         return messageMapper.toJson(t);
                     })
                     .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .doOnUnsubscribe(() -> {
-                        log.info("Stream for [" + request.q + "] finished due to subscription cancellation");
-                    });
+                    .map(Optional::get);
 
-            subscription = mappedTweetStream.subscribe(outgoingStream);
+            Observable<String> tweetsCount =
+                    hostTweetStream
+                    .subscribeOn(Schedulers.io())
+                    .window(10, TimeUnit.SECONDS)
+                    .flatMap(window -> window.subscribeOn(Schedulers.io()).count())
+                    .doOnEach(c -> { log.info("Received tweets during last 10 seconds: " + c.getValue() );})
+                    .map(TweetStatisticsEvent::new)
+                    .map(c -> messageMapper.toJson(c))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get);
+
+            Observable<Tweet> tweetsFromMorePopularUsers = hostTweetStream
+                    .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
+                    .distinctUntilChanged();
+
+            Observable<String> newMostPopularAuthorStream = tweetsFromMorePopularUsers
+                    .flatMap(t -> new ProblemSolutions().getUserProfileAndLatestPopularTweet(twitterClient, t.author))
+                    .subscribeOn(Schedulers.io())
+                    .doOnEach(c -> {
+                        log.info("New most popular author detected: " + c.getValue());
+                    })
+                    .map(c -> messageMapper.toJson(c))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get);
+
+
+            CompositeSubscription compositeSubscription = new CompositeSubscription();
+            compositeSubscription.add(mappedTweetStream.subscribe(outgoingStream));
+            compositeSubscription.add(tweetsCount.subscribe(outgoingStream));
+            compositeSubscription.add(newMostPopularAuthorStream.subscribe(outgoingStream));
+
+            subscription = compositeSubscription;
         });
     }
 
@@ -108,6 +150,12 @@ class TweetsWebSocketHandler implements WebSocketHandler<String> {
     private void cancelSubscriptionIfRequired() {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
+        }
+        if (hostTweetStream != null){
+            hostTweetStream.onCompleted();
+        }
+        if (tweetStreamSubscription != null && !tweetStreamSubscription.isUnsubscribed()){
+            tweetStreamSubscription.unsubscribe();
         }
     }
 

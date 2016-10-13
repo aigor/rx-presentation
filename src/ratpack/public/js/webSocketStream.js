@@ -57,14 +57,36 @@ function closeSocket(){
 function writeResponse(respText){
     console.log("Received: " + respText);
     var resp = JSON.parse(respText);
-    if (resp.type != undefined && resp.type == "tweet"){
-        $("#tweets-stream").prepend($("<li>").append(
-            $("<blockquote>").append(
-                $("<p>").text(resp.text)
-            ).append(
-                $("<a>").text("by @" + resp.author)
-            )
-        ));
+    if (resp.type != undefined) {
+        if (resp.type == "tweet"){
+            $("#tweets-stream").prepend($("<li>").append(
+                $("<blockquote>").append(
+                    $("<p>").text(resp.text)
+                ).append(
+                    $("<a>").text("by @" + resp.author)
+                )
+            ));
+
+        } else if (resp.type == "tweetStatisticsEvent") {
+            $("#received-tweets").text(resp.receivedTweets)
+        } else if (resp.type == "userWithTweet") {
+            $("#popular-authors").prepend($("<li>").append(
+                            $("<div>").attr("style", "float: left;")
+                            .append(
+                                $("<img>").attr("src", resp.profile.profile_image_url)
+                            ))
+                            .append(
+                                $("<div>").attr("style", "float: left; margin-left: 1em;")
+                                    .append($("<p>").attr("style", "font-weight: bold;").text(resp.profile.name + " (@" + resp.profile.screen_name + ")"))
+                                    .append($("<p>").attr("style", "white-space: pre-wrap;")
+                                        .text("Followers: " + resp.profile.followers_count
+                                            + "\nFriends: " + resp.profile.friends_count
+                                            + "\nTweets: " + resp.profile.statuses_count))
+                            )
+                            .append($("<div>").attr("style", "float: none; clear: both;"))
+                            .append($("<hr/>"))
+            );
+        }
     }
 }
 

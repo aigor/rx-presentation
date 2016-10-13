@@ -41,3 +41,16 @@
 #tweets-stream li {
     list-style-type: none
 }
+
+#tweets-stream p {
+    white-space: pre-wrap;
+}
+
+#received-tweets {
+    font-weight: bold;
+}
+
+#popular-authors li {
+    list-style-type: none
+}
+

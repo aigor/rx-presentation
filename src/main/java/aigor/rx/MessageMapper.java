@@ -22,9 +22,9 @@ public class MessageMapper {
         }
     }
 
-    public Optional<String> toJson(Tweet tweet){
+    public Optional<String> toJson(Object object){
         try {
-            return Optional.of(objectMapper.writeValueAsString(tweet));
+            return Optional.of(objectMapper.writeValueAsString(object));
         } catch (JsonProcessingException e) {
             return Optional.empty();
         }

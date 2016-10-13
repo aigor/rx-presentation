@@ -12,6 +12,7 @@ public class Profile {
     public String screen_name;
     public String name;
     public String location;
+    public String profile_image_url;
     public int statuses_count;
     public int friends_count;
     public int followers_count;
@@ -37,6 +38,7 @@ public class Profile {
                 ", statuses_count=" + statuses_count +
                 ", friends_count=" + friends_count +
                 ", followers_count=" + followers_count +
+                ", profile_image_url=" + profile_image_url +
                 '}';
     }
 
