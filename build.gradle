@@ -22,7 +22,7 @@ dependencies {
     compile         'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     compile         'com.twitter:hbc-core:2.2.0'
 
-    runtime         "org.slf4j:slf4j-simple:1.7.12"
+    compile         "org.slf4j:slf4j-simple:1.7.12"
 
     testCompile     'junit:junit:4.+'
     testCompile     'org.mockito:mockito-all:1.10.19'
