@@ -39,8 +39,8 @@ Twitter Stream API (WebSocket alike):
 - Library: ```com.twitter:hbc-core:2.2.0```
 
 Twitter REST API ([Documentation](https://dev.twitter.com/rest/public)):
-- ```GET https://api.twitter.com/1.1/users/show.json?screen_name=jeeconf```
-- ```GET https://api.twitter.com/1.1/search/tweets.json?q=from:jeeconf```
+- ```GET https://api.twitter.com/1.1/users/show.json?screen_name=neposuda```
+- ```GET https://api.twitter.com/1.1/search/tweets.json?q=from:neposuda```
 
 #### Entities used in solution
 
@@ -130,7 +130,7 @@ Observable<UserWithTweet> getUserAndPopularTweet(String author){
 
 #### Tweat stream subscription (most popular user)
 ```java
-streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+streamClient.getStream("RxJava", "JEEConf", "JavaDay" "Java", "Trump")
     .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
     .distinctUntilChanged()
     .map(p -> p.author)
@@ -143,7 +143,7 @@ streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
 
 Same solution but with extended method: getUserAndPopularTweet(name)
 ```java
-streamClient.getStream("RxJava", "JEEConf", "Java", "Trump")
+streamClient.getStream("RxJava", "JEEConf", "JavaDay", "Java", "Trump")
     .scan((u1, u2) -> u1.author_followers > u2.author_followers ? u1 : u2)
     .distinctUntilChanged()
     .map(p -> p.author)
