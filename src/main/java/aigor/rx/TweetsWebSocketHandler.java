@@ -31,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Handle WebSocket communication
  * Created by aigor on 13.10.16.
+ *
+ * TODO: Try broadcast in order to find out how long websocket lives
  */
 class TweetsWebSocketHandler implements WebSocketHandler<String> {
     private static final Logger log = LoggerFactory.getLogger(TweetsWebSocketHandler.class.getSimpleName());
@@ -81,6 +83,7 @@ class TweetsWebSocketHandler implements WebSocketHandler<String> {
 
         keyWordsRequest.ifPresent(request -> {
             cancelSubscriptionIfRequired();
+
             Observable<String> mappedTweetStream = twitterStreamClient
                     .getStream(getKeyWords(request))
                     .subscribeOn(Schedulers.io())
@@ -111,9 +114,9 @@ class TweetsWebSocketHandler implements WebSocketHandler<String> {
     @Override
     public void onClose(WebSocketClose<String> close) throws Exception {
         cancelSubscriptionIfRequired();
-        log.info("Closing socket after: " + (System.currentTimeMillis() - this.startTime) + " ms.");
-        log.info("WebSocket closed for Web client: " + close.getOpenResult()
-                + ", isFromServer: " + close.isFromServer() + ", isFromClient: " + close.isFromClient());
+        log.info("WebSocket closed for [" + close.getOpenResult()
+                + "], fromServer: " + close.isFromServer() + ", fromClient: " + close.isFromClient()
+                + ", socket lived for " + (System.currentTimeMillis() - this.startTime) + " ms.");
     }
 
     private static Publisher<ByteBuf> byteBufferStream(Publisher<String> broadcaster, ByteBufAllocator bufferAllocator) {

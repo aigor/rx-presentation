@@ -27,8 +27,10 @@ function openSocket(){
         // For reasons I can't determine, onopen gets called twice
         // and the first time event.data is undefined.
         // Leave a comment if you know the answer.
-        if(event.data === undefined)
+        if(event.data === undefined){
+            setTimeout(startStreaming, 200);
             return;
+        }
 
         writeResponse(event.data);
     };
@@ -39,6 +41,12 @@ function openSocket(){
 
     webSocket.onclose = function(event){
         console.log("WebSocket connection closed");
+        setTimeout(openSocket, 1000);
+
+    };
+
+    webSocket.onerror = function (error) {
+        console.log("Error happened: " + error);
     };
 }
 

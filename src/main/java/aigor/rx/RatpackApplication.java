@@ -36,7 +36,6 @@ public class RatpackApplication {
                             context.render("Hello TwitterBuzz user!");
                         })
                         .get("ws", context -> {
-                            log.info("Config maxContentLength:" +  context.get(ServerConfig.class).getMaxContentLength());
                             WebSockets.websocket(context, new TweetsWebSocketHandler(context, new TwitterClientFactory()));
                         })
                         .files(f -> f.dir("public"))
