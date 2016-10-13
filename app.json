@@ -1,5 +1,6 @@
 {
   "name": "TwitterBuzz",
   "description": "Interesting tweets stream processor",
-  "image": "heroku/gradle"
+  "image": "heroku/gradle",
+  "addons": [ "heroku-postgresql" ]
 }
