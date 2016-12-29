@@ -230,6 +230,7 @@ Recommended videos:
 
 Recommended articles:
 - [Concurrency in RxJava (RU)](https://habrahabr.ru/company/rambler-co/blog/280388/)
+- [Thomas Nield: RxJava - Understanding observeOn() and subscribeOn()](http://tomstechnicalblog.blogspot.com/2016/02/rxjava-understanding-observeon-and.html)
 
 Good Presentations:
 - [RxJava - introduction & design](http://www.slideshare.net/allegrotech/rxjava-introduction-context)
